@@ -6,6 +6,7 @@ import CalendarViewType from './CalendarViewType';
 import { useSelector } from 'react-redux';
 import CalendarView from './CalendarView';
 import { TransactionViewType } from '../utils/calendar';
+import FloatingButton from './FloatingButton';
 
 export interface TransactionsContainerProps {}
 
@@ -28,6 +29,7 @@ const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element =>
       <CalendarHeader />
       <CalendarViewType />
       {renderTransactionView()}
+      <FloatingButton />
     </View>
   );
 };
