@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ButtonWrapper from './ButtonWrapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { MONTHS } from '../data/calender';
 import { nextMonth, prevMonth } from '../redux/calendarSlice';
+import { TransactionViewType } from '../utils/calendar';
 
 export interface CalendarHeaderProps {}
 
 const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { selectedMonth, selectedYear, selectedViewType } = useSelector((state: RootState) => state.calendar);
+  const { selectedMonth, selectedYear, selectedViewType } = useSelector(
+    (state: RootState) => state.calendar
+  );
 
   const onPressNext = useCallback(() => {
     dispatch(nextMonth());
@@ -22,12 +25,21 @@ const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
     dispatch(prevMonth());
   }, []);
 
+  const label = useMemo(() => {
+    switch (selectedViewType) {
+      case TransactionViewType.Monthly:
+        return `${selectedYear}`;
+      default:
+        return `${MONTHS[selectedMonth]} ${selectedYear}`;
+    }
+  }, [selectedViewType, selectedMonth, selectedYear]);
+
   return (
     <View style={styles.headerContainer}>
       <ButtonWrapper onPress={onPressPrev}>
         <Ionicons name={'chevron-back-outline'} color={COLOR.white} size={24} />
       </ButtonWrapper>
-      <Text style={styles.text}>{`${MONTHS[selectedMonth]} ${selectedYear}`}</Text>
+      <Text style={styles.text}>{label}</Text>
       <ButtonWrapper onPress={onPressNext}>
         <Ionicons name={'chevron-forward-outline'} color={COLOR.white} size={24} />
       </ButtonWrapper>
