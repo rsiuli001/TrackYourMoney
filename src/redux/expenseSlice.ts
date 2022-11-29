@@ -1,30 +1,19 @@
-import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Expense } from '../types/expense';
+import { onAddExpense, onDeleteExpense, onUpdateExpense } from './expenseActions';
 
 const initialState: Expense[] = [];
-
-const addExpense: CaseReducer<Expense[], PayloadAction<Expense>> = (state, action) => {
-  state.push(action.payload);
-};
-
-const updateExpense: CaseReducer<Expense[], PayloadAction<Expense>> = (state, action) => {
-  // state.push(action.payload);
-};
-
-const deleteExpense: CaseReducer<Expense[], PayloadAction<Expense>> = (state, action) => {
-  // state.push(action.payload);
-};
 
 export const expenseSlice = createSlice({
   name: 'expense',
   initialState,
   reducers: {
-    addExpense,
-    updateExpense,
-    deleteExpense
+    addExpense: onAddExpense,
+    updateExpense: onUpdateExpense,
+    deleteExpense: onDeleteExpense
   }
 });
 
-export { addExpense, deleteExpense, updateExpense };
+export const { addExpense, deleteExpense, updateExpense } = expenseSlice.actions;
 
 export default expenseSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import COLOR from '../../assets/color';
 import { CALENDAR_VIEW_DATA } from '../data/calender';
@@ -18,16 +18,17 @@ const CalendarViewType: FC<CalendarViewTypeProps> = (): JSX.Element => {
   }, []);
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+    <View style={styles.container}>
       {CALENDAR_VIEW_DATA.map((item, index) => {
         const borderBottomColor = selectedViewType === index ? COLOR.red : COLOR.black;
+        const color = selectedViewType === index ? COLOR.white : COLOR.grey;
         return (
           <ButtonWrapper
             key={index}
             style={[styles.calendarViewTypeContainer, { borderBottomColor }]}
             onPress={() => onPress(index)}
           >
-            <Text style={{ color: COLOR.white }}>{item}</Text>
+            <Text style={{ color }}>{item}</Text>
           </ButtonWrapper>
         );
       })}
@@ -36,6 +37,10 @@ const CalendarViewType: FC<CalendarViewTypeProps> = (): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   calendarViewTypeContainer: {
     borderBottomWidth: 2,
     paddingBottom: 5,

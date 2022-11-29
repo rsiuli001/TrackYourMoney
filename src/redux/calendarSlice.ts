@@ -1,39 +1,30 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 import { CalendarState } from '../types/calendar';
+import { calculateDays } from '../utils/calendar';
+import { onDaySelect, onNextMonth, onPrevMonth, onUpdateViewType } from './calendarActions';
 
-const today = new Date();
+const today = moment();
 
 const initialState: CalendarState = {
   today,
-  selectedDay: today.getDay(),
-  selectedMonth: today.getMonth(),
-  selectedViewType: 0
+  selectedDay: today.day(),
+  selectedMonth: today.month(),
+  selectedYear: today.year(),
+  selectedViewType: 0,
+  calendar: {
+    [`${today.month()}-${today.year()}`]: calculateDays(today.month(), today.year())
+  }
 };
 
 export const calendarSlice = createSlice({
   name: 'calendar',
   initialState,
   reducers: {
-    nextMonth: state => {
-      if (state.selectedMonth === 11) {
-        state.selectedMonth = 0;
-      } else {
-        state.selectedMonth += 1;
-      }
-    },
-    prevMonth: state => {
-      if (state.selectedMonth === 0) {
-        state.selectedMonth = 11;
-      } else {
-        state.selectedMonth -= 1;
-      }
-    },
-    selectDay: (state, action: PayloadAction<number>) => {
-      state.selectedDay = action.payload;
-    },
-    updateViewType: (state, action: PayloadAction<number>) => {
-      state.selectedViewType = action.payload;
-    }
+    nextMonth: onNextMonth,
+    prevMonth: onPrevMonth,
+    selectDay: onDaySelect,
+    updateViewType: onUpdateViewType
   }
 });
 

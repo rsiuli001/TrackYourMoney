@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ButtonWrapper from './ButtonWrapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,7 +12,7 @@ export interface CalendarHeaderProps {}
 
 const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { today, selectedMonth, selectedDay } = useSelector((state: RootState) => state.calendar);
+  const { selectedMonth } = useSelector((state: RootState) => state.calendar);
 
   const onPressNext = useCallback(() => {
     dispatch(nextMonth());
