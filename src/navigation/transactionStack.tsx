@@ -1,9 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { FC } from 'react';
 import COLOR from '../../assets/color';
-import { TransactionScreen } from '../screens';
+import { AddTransactionScreen, TransactionScreen } from '../screens';
 
 export type TransactionStackParams = {
+  AddTransaction: undefined;
   TransactionScreen: undefined;
 };
 
@@ -32,6 +33,7 @@ const TransactionStack: FC = (): JSX.Element => (
         headerTitle: 'Transactions'
       }}
     />
+    <Screen name={'AddTransaction'} component={AddTransactionScreen} />
   </Navigator>
 );
 

@@ -8,10 +8,10 @@ import { TransactionStackParams } from '../navigation/transactionStack';
 export interface TransactionScreenProps
   extends NativeStackScreenProps<TransactionStackParams, 'TransactionScreen'> {}
 
-const TransactionScreen: FC<TransactionScreenProps> = ({ navigation }): JSX.Element => {
+const TransactionScreen: FC<TransactionScreenProps> = (props): JSX.Element => {
   return (
     <View style={styles.container}>
-      <TransactionsContainer />
+      <TransactionsContainer {...props} />
     </View>
   );
 };

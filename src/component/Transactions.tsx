@@ -1,19 +1,25 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RootState } from '../redux/store';
-import CalendarHeader from './CalendarHeader';
-import CalendarViewType from './CalendarViewType';
 import { useSelector } from 'react-redux';
-import CalendarView from './CalendarView';
 import { TransactionViewType } from '../utils/calendar';
-import FloatingButton from './FloatingButton';
-import Daily from './Daily';
-import Monthly from './Monthly';
-import Summary from './Summary';
+import {
+  CalendarHeader,
+  CalendarView,
+  CalendarViewType,
+  Daily,
+  FloatingButton,
+  Monthly,
+  Summary
+} from '.';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TransactionStackParams } from '../navigation/transactionStack';
 
-export interface TransactionsContainerProps {}
+export interface TransactionsContainerProps
+  extends NativeStackScreenProps<TransactionStackParams, 'TransactionScreen'> {}
 
-const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element => {
+const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): JSX.Element => {
   const { selectedViewType } = useSelector((state: RootState) => state.calendar);
 
   const renderTransactionView = (): ReactNode => {
@@ -31,12 +37,16 @@ const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element =>
     }
   };
 
+  const onPress = useCallback(() => {
+    navigation.push('AddTransaction');
+  }, []);
+
   return (
     <View style={styles.container}>
       <CalendarHeader />
       <CalendarViewType />
       {renderTransactionView()}
-      <FloatingButton />
+      <FloatingButton onPress={onPress} />
     </View>
   );
 };
