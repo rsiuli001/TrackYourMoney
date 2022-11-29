@@ -6,9 +6,9 @@ import CalendarViewType from './CalendarViewType';
 import { useSelector } from 'react-redux';
 import CalendarView from './CalendarView';
 
-export interface CalendarProps {}
+export interface TransactionsContainerProps {}
 
-const Calendar: FC<CalendarProps> = (): JSX.Element => {
+const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element => {
   const { selectedViewType } = useSelector((state: RootState) => state.calendar);
 
   const renderTransactionView = (): ReactNode => {
@@ -31,4 +31,4 @@ const Calendar: FC<CalendarProps> = (): JSX.Element => {
   );
 };
 
-export default Calendar;
+export default TransactionsContainer;

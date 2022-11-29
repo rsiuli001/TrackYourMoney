@@ -1,12 +1,11 @@
 import React, { FC, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import COLOR from '../../assets/color';
-import { WEEK_DAYS } from '../data/calender';
+import { StyleSheet, View } from 'react-native';
 import { RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { uniqueId } from 'lodash';
 import CalendarDateBlock from './CalendarDateBlock';
 import WeekBanner from './WeekBanner';
+import TransactionSummary from './TransactionSummary';
 
 export interface CalendarViewProps {}
 
@@ -23,8 +22,8 @@ const CalendarView: FC<CalendarViewProps> = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
+      <TransactionSummary income={5000} expense={50000} />
       <WeekBanner />
-
       <View>
         {calendar[key].map(row => {
           return (
