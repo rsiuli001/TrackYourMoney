@@ -12,7 +12,7 @@ export interface CalendarHeaderProps {}
 
 const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { selectedMonth } = useSelector((state: RootState) => state.calendar);
+  const { selectedMonth, selectedYear, selectedViewType } = useSelector((state: RootState) => state.calendar);
 
   const onPressNext = useCallback(() => {
     dispatch(nextMonth());
@@ -27,7 +27,7 @@ const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
       <ButtonWrapper onPress={onPressPrev}>
         <Ionicons name={'chevron-back-outline'} color={COLOR.white} size={24} />
       </ButtonWrapper>
-      <Text style={{ color: COLOR.white }}>{MONTHS[selectedMonth]}</Text>
+      <Text style={styles.text}>{`${MONTHS[selectedMonth]} ${selectedYear}`}</Text>
       <ButtonWrapper onPress={onPressNext}>
         <Ionicons name={'chevron-forward-outline'} color={COLOR.white} size={24} />
       </ButtonWrapper>
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginTop: 10,
     marginBottom: 10
+  },
+  text: {
+    color: COLOR.white
   }
 });
 

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { CalendarState } from '../types/calendar';
-import { calculateDays } from '../utils/calendar';
+import { calculateDays, TransactionViewType } from '../utils/calendar';
 import { onDaySelect, onNextMonth, onPrevMonth, onUpdateViewType } from './calendarActions';
 
 const today = moment();
@@ -11,7 +11,7 @@ const initialState: CalendarState = {
   selectedDay: today.day(),
   selectedMonth: today.month(),
   selectedYear: today.year(),
-  selectedViewType: 0,
+  selectedViewType: TransactionViewType.Daily,
   calendar: {
     [`${today.month()}-${today.year()}`]: calculateDays(today.month(), today.year())
   }

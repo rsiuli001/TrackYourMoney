@@ -1,6 +1,6 @@
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { CalendarState } from '../types/calendar';
-import { calculateDays } from '../utils/calendar';
+import { calculateDays, TransactionViewType } from '../utils/calendar';
 
 const onNextMonth: CaseReducer<CalendarState> = state => {
   if (state.selectedMonth === 11) {
@@ -34,7 +34,10 @@ const onDaySelect: CaseReducer<CalendarState, PayloadAction<number>> = (state, a
   state.selectedDay = action.payload;
 };
 
-const onUpdateViewType: CaseReducer<CalendarState, PayloadAction<number>> = (state, action) => {
+const onUpdateViewType: CaseReducer<CalendarState, PayloadAction<TransactionViewType>> = (
+  state,
+  action
+) => {
   state.selectedViewType = action.payload;
 };
 

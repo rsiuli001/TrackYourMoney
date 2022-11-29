@@ -5,6 +5,7 @@ import CalendarHeader from './CalendarHeader';
 import CalendarViewType from './CalendarViewType';
 import { useSelector } from 'react-redux';
 import CalendarView from './CalendarView';
+import { TransactionViewType } from '../utils/calendar';
 
 export interface TransactionsContainerProps {}
 
@@ -13,9 +14,9 @@ const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element =>
 
   const renderTransactionView = (): ReactNode => {
     switch (selectedViewType) {
-      case 0:
+      case TransactionViewType.Daily:
         return null;
-      case 1:
+      case TransactionViewType.Calendar:
         return <CalendarView />;
       default:
         return null;
