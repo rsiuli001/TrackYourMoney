@@ -1,3 +1,7 @@
+import AddExpense from './AddExpense';
+import AddIncome from './AddIncome';
+import AddtransactionContainer from './AddTransactionContainer';
+import AddTransfer from './AddTransfer';
 import ButtonWrapper from './ButtonWrapper';
 import CalendarDateBlock from './CalendarDateBlock';
 import CalendarHeader from './CalendarHeader';
@@ -13,6 +17,10 @@ import WeekBanner from './WeekBanner';
 import Weekly from './Weekly';
 
 export {
+  AddExpense,
+  AddIncome,
+  AddtransactionContainer,
+  AddTransfer,
   ButtonWrapper,
   CalendarDateBlock,
   CalendarHeader,

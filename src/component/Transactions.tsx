@@ -12,7 +12,6 @@ import {
   Monthly,
   Summary
 } from '.';
-import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TransactionStackParams } from '../navigation/transactionStack';
 

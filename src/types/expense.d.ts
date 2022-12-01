@@ -1,5 +1,7 @@
+import { TransactionType } from '../utils/transaction';
+
 export interface Expense {
-  type: 'income' | 'expense' | 'transfer';
+  type: TransactionType;
   date: Date;
   account: string;
   category: string;
