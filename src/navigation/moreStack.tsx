@@ -9,7 +9,9 @@ export type MoreStackParams = {
 const { Navigator, Screen } = createNativeStackNavigator<MoreStackParams>();
 
 const MoreStack: FC = (): JSX.Element => (
-  <Navigator screenOptions={{ gestureEnabled: false }} initialRouteName={'MoreScreen'}>
+  <Navigator
+    screenOptions={{ gestureEnabled: false }}
+    initialRouteName={'MoreScreen'}>
     <Screen name={'MoreScreen'} component={MoreScreen} />
   </Navigator>
 );

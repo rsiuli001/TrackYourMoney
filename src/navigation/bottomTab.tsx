@@ -1,33 +1,33 @@
-import React, { useMemo } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, {useMemo} from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { uniqueId } from 'lodash';
-import { RootStacks } from '.';
-import COLOR from '../../assets/color';
+import {RootStacks} from './index';
+import {uniqueId} from 'lodash';
+import COLOR from '@assets/color';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const {Navigator, Screen} = createBottomTabNavigator();
 
 function BottomTabNav(): JSX.Element {
   const tabBarStyle = useMemo(
     () => ({
       backgroundColor: COLOR.black,
-      marginTop: 5
+      marginTop: 5,
     }),
-    []
+    [],
   );
 
   return (
     <Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarActiveTintColor: COLOR.red,
         tabBarInactiveTintColor: COLOR.white,
         tabBarStyle: tabBarStyle,
         tabBarLabelStyle: {
           fontSize: 11,
-          fontWeight: '500'
+          fontWeight: '500',
         },
-        tabBarIcon: ({ focused, color }) => {
+        tabBarIcon: ({focused, color}) => {
           let iconName;
           switch (route.name) {
             case 'Transactions':
@@ -40,16 +40,17 @@ function BottomTabNav(): JSX.Element {
               iconName = focused ? 'server' : 'server-outline';
               break;
             case 'More':
-              iconName = focused ? 'md-ellipsis-horizontal' : 'md-ellipsis-horizontal-outline';
+              iconName = focused
+                ? 'md-ellipsis-horizontal'
+                : 'md-ellipsis-horizontal-outline';
               break;
             default:
               iconName = 'alert-circle';
               break;
           }
           return <Ionicons name={iconName} size={18} color={color} />;
-        }
-      })}
-    >
+        },
+      })}>
       {RootStacks.map(stack => (
         <Screen key={uniqueId('STACK_KEY_')} {...stack} />
       ))}

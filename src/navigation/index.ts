@@ -1,4 +1,3 @@
-import { TypedNavigator } from '@react-navigation/native';
 import AccountsStack from './accountsStack';
 import { default as RootStack } from './bottomTab';
 import MoreStack from './moreStack';
@@ -12,21 +11,21 @@ const RootStacks = [
     component: TransactionStack,
     name: 'Transactions',
     options: {
-      tabBarLabel: `${today.getDate()}/${today.getMonth() + 1}`
-    }
+      tabBarLabel: `${today.getDate()}/${today.getMonth() + 1}`,
+    },
   },
   {
     component: StatsStack,
-    name: 'Stats'
+    name: 'Stats',
   },
   {
     component: AccountsStack,
-    name: 'Accounts'
+    name: 'Accounts',
   },
   {
     component: MoreStack,
-    name: 'More'
-  }
+    name: 'More',
+  },
 ];
 
 export { RootStacks, RootStack };
