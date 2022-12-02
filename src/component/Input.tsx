@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 15,
     paddingRight: 15,
-    marginTop: 15
+    marginTop: 10
   },
   formLabel: {
     color: COLOR.offWhite,

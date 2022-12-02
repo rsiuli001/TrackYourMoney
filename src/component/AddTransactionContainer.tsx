@@ -5,7 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import COLOR from '../../assets/color';
 import { TransactionStackParams } from '../navigation/transactionStack';
 import { TransactionType } from '../utils/transaction';
-import { AddExpense, AddIncome, AddTransfer } from '.';
+import { AddTransactionForm, AddTransfer } from '.';
 
 export interface AddtransactionContainerProps
   extends NativeStackScreenProps<TransactionStackParams, 'AddTransaction'> {}
@@ -40,9 +40,9 @@ const AddtransactionContainer: FC<AddtransactionContainerProps> = ({ navigation 
   const renderForm = (): ReactNode => {
     switch (activeHeader) {
       case TransactionType.Income:
-        return <AddIncome />;
+        return <AddTransactionForm transactionType={TransactionType.Income} />;
       case TransactionType.Expense:
-        return <AddExpense />;
+        return <AddTransactionForm transactionType={TransactionType.Expense} />;
       case TransactionType.Transfer:
         return <AddTransfer />;
       default:
