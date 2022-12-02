@@ -1,6 +1,14 @@
 import moment from 'moment';
 import { CalendarDays } from '../types/calendar';
 
+export enum TransactionViewType {
+  Calendar = 'CALENDAR',
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Summary = 'SUMMARY',
+  Weekly = 'WEEKLY'
+}
+
 const calculateDays = (month: number, year: number): (CalendarDays | null)[][] => {
   const date = moment(`${year}-${month + 1}`, 'YYYY-MM');
   const firstDayOfMonth = Number(date.startOf('month').format('d'));

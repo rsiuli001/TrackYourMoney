@@ -1,34 +1,59 @@
-import React, { FC, ReactNode } from 'react';
-import { View } from 'react-native';
+import React, { FC, ReactNode, useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { RootState } from '../redux/store';
-import CalendarHeader from './CalendarHeader';
-import CalendarViewType from './CalendarViewType';
 import { useSelector } from 'react-redux';
-import CalendarView from './CalendarView';
+import { TransactionViewType } from '../utils/calendar';
+import {
+  CalendarHeader,
+  CalendarView,
+  CalendarViewType,
+  Daily,
+  FloatingButton,
+  Monthly,
+  Summary
+} from '.';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TransactionStackParams } from '../navigation/transactionStack';
 
-export interface TransactionsContainerProps {}
+export interface TransactionsContainerProps
+  extends NativeStackScreenProps<TransactionStackParams, 'TransactionScreen'> {}
 
-const TransactionsContainer: FC<TransactionsContainerProps> = (): JSX.Element => {
+const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): JSX.Element => {
   const { selectedViewType } = useSelector((state: RootState) => state.calendar);
 
   const renderTransactionView = (): ReactNode => {
     switch (selectedViewType) {
-      case 0:
-        return null;
-      case 1:
+      case TransactionViewType.Daily:
+        return <Daily />;
+      case TransactionViewType.Calendar:
         return <CalendarView />;
+      case TransactionViewType.Monthly:
+        return <Monthly />;
+      case TransactionViewType.Summary:
+        return <Summary />;
       default:
         return null;
     }
   };
 
+  const onPress = useCallback(() => {
+    navigation.push('AddTransaction');
+  }, []);
+
   return (
-    <View>
+    <View style={styles.container}>
       <CalendarHeader />
       <CalendarViewType />
       {renderTransactionView()}
+      <FloatingButton onPress={onPress} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 export default TransactionsContainer;

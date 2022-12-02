@@ -1,4 +1,3 @@
-
 // const CALENDAR_VIEW_DATA: CalenderViewType[] = [
 //   {
 //     key: 1,
@@ -22,7 +21,16 @@
 //   }
 // ];
 
-const CALENDAR_VIEW_DATA = ['Daily', 'Calendar', 'Weekly', 'Monthly', 'Summary'];
+import { TransactionViewType } from '../utils/calendar';
+
+const CALENDAR_VIEW_DATA: TransactionViewType[] = [
+  TransactionViewType.Daily,
+  TransactionViewType.Calendar,
+  TransactionViewType.Weekly,
+  TransactionViewType.Monthly,
+  TransactionViewType.Summary
+];
+//  ['Daily', 'Calendar', 'Weekly', 'Monthly', 'Summary'];
 const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = [
   'January',

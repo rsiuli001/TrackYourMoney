@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import calendarReducer from './calendarSlice';
 import expenseReducer from './expenseSlice';
+import incomeReducer from './incomeSlice';
 
 const createDebugger = require('redux-flipper').default;
 
 const store = configureStore({
   reducer: {
     expenses: expenseReducer,
+    incomde: incomeReducer,
     calendar: calendarReducer,
   },
   middleware: getDefaultMiddleware =>

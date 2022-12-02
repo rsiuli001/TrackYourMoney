@@ -2,16 +2,16 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import COLOR from '../../assets/color';
-import { TransactionsContainer } from '../component';
+import { AddtransactionContainer } from '../component';
 import { TransactionStackParams } from '../navigation/transactionStack';
 
-export interface TransactionScreenProps
-  extends NativeStackScreenProps<TransactionStackParams, 'TransactionScreen'> {}
+export interface AddTransactionScreenProps
+  extends NativeStackScreenProps<TransactionStackParams, 'AddTransaction'> {}
 
-const TransactionScreen: FC<TransactionScreenProps> = (props): JSX.Element => {
+const AddTransactionScreen: FC<AddTransactionScreenProps> = (props): JSX.Element => {
   return (
     <View style={styles.container}>
-      <TransactionsContainer {...props} />
+      <AddtransactionContainer {...props} />
     </View>
   );
 };
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TransactionScreen;
+export default AddTransactionScreen;

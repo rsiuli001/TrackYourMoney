@@ -10,7 +10,7 @@ export interface CalendarState {
   selectedMonth: number;
   selectedDay: number;
   selectedYear: number;
-  selectedViewType: number;
+  selectedViewType: TransactionViewType;
   calendar: {
     [key: string]: (CalendarDays | null)[][];
   };
