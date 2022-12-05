@@ -1,4 +1,4 @@
-import { TransactionType } from '../utils/transaction';
+import { Months, TransactionType } from '../utils/transaction';
 
 export interface AddTransactionFormValues {
   date: string;
@@ -33,8 +33,16 @@ export interface Transaction {
   description: string;
 }
 
-export interface TransactionState {
+export interface MonthData {
   [key: string]: Transaction[];
+}
+
+export interface YearData {
+  [key: string]: MonthData;
+}
+
+export interface TransactionState {
+  [key: string]: YearData;
 }
 
 export interface AddTransactionPayload {

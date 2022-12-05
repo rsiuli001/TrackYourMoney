@@ -1,13 +1,25 @@
+import { RootState } from '@/redux/store';
+import { calculateMonthlyExpense } from '@/utils/transaction';
 import React, { FC, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import COLOR from '../../assets/color';
 
 export interface TransactionSummaryProps {
-  expense: number;
-  income: number;
+  // expense: number;
+  // income: number;
 }
 
-const TransactionSummary: FC<TransactionSummaryProps> = ({ expense, income }): JSX.Element => {
+const TransactionSummary: FC<TransactionSummaryProps> = (): JSX.Element => {
+  const { income, expense, total } = useSelector((state: RootState) => {
+    const { selectedYear, selectedMonth } = state.calendar;
+    const { expenses, income } = state;
+    return calculateMonthlyExpense(
+      income[selectedYear][selectedMonth],
+      expenses[selectedYear][selectedMonth]
+    );
+  });
+
   const renderEl = (label: string, value: string, color: string): ReactNode => (
     <View style={styles.elContainer}>
       <Text style={styles.label}>{label}</Text>
@@ -18,7 +30,7 @@ const TransactionSummary: FC<TransactionSummaryProps> = ({ expense, income }): J
     <View style={styles.container}>
       {renderEl('Income', `${income}`, COLOR.blue)}
       {renderEl('Expenses', `${expense}`, COLOR.red)}
-      {renderEl('Total', `${income - expense}`, COLOR.white)}
+      {renderEl('Total', `${total}`, COLOR.white)}
     </View>
   );
 };

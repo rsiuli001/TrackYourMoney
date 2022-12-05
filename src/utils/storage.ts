@@ -77,3 +77,7 @@ export const getTempMMKVData = (key: string) => {
     //console.log(`getTemp Successful`);
   }
 };
+
+export const clearMMKVStorage = (): void => {
+  storage.clearAll();
+};

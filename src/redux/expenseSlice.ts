@@ -1,4 +1,7 @@
+import { getLocalStorageKey } from '@/utils/calendar';
+import { TransactionType } from '@/utils/transaction';
 import { createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 import { TransactionState } from '../types/transaction';
 import {
   fetchLocalData,
@@ -7,9 +10,14 @@ import {
   onUpdateTransaction
 } from './transactionActions';
 
-const initalDataFromLocal = fetchLocalData('expense');
+const date = moment();
+const initalDataFromLocal = fetchLocalData(
+  getLocalStorageKey(TransactionType.Expense, date.year().toString(), date.month().toString())
+);
 
-const initialState: TransactionState = initalDataFromLocal ? initalDataFromLocal : {};
+const initialState: TransactionState = initalDataFromLocal
+  ? { [date.year()]: initalDataFromLocal }
+  : {};
 
 export const expenseSlice = createSlice({
   name: 'expense',

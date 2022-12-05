@@ -1,9 +1,17 @@
-import { doesExist, getMMKVData, removeMMKVData, storeMMKVData } from '@/utils/storage';
+import { getDayMonthYear, getLocalStorageKey } from '@/utils/calendar';
+import {
+  clearMMKVStorage,
+  doesExist,
+  getMMKVData,
+  removeMMKVData,
+  storeMMKVData
+} from '@/utils/storage';
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import {
   AddTransactionPayload,
   TransactionState,
-  UpdateTransactionPayload
+  UpdateTransactionPayload,
+  YearData
 } from '../types/transaction';
 
 const onAddTransaction: CaseReducer<TransactionState, PayloadAction<AddTransactionPayload>> = (
@@ -11,12 +19,36 @@ const onAddTransaction: CaseReducer<TransactionState, PayloadAction<AddTransacti
   action
 ) => {
   const { key, value } = action.payload;
-  if (key in state) {
-    state[key].push(value);
+  const { date, month, year } = getDayMonthYear(value.date);
+
+  if (year in state) {
+    if (month in state[year]) {
+      if (date in state[year][month]) {
+        state[year][month][date].push(value);
+      } else {
+        state[year][month] = {
+          [date]: [value]
+        };
+      }
+    } else {
+      state[year] = {
+        [month]: {
+          [date]: [value]
+        }
+      };
+    }
   } else {
-    state[key] = [value];
+    state = {
+      [year]: {
+        [month]: {
+          [date]: [value]
+        }
+      }
+    };
   }
-  storeTransactionData(value.type.toLowerCase(), state);
+
+  storeTransactionData(getLocalStorageKey(value.type, year, month), state[year]);
+  return state;
 };
 
 const onUpdateTransaction: CaseReducer<
@@ -41,7 +73,7 @@ const fetchLocalData = (key: string) => {
   return {};
 };
 
-const storeTransactionData = (key: string, state: TransactionState) => {
+const storeTransactionData = (key: string, state: YearData) => {
   const exisitingData = doesExist(key);
   if (exisitingData) {
     removeMMKVData(key).then(() => {

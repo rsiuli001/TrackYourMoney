@@ -45,7 +45,7 @@ const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): 
     <View style={styles.container}>
       <CalendarHeader />
       <CalendarViewType />
-      <TransactionSummary income={5000} expense={50000} />
+      <TransactionSummary />
       {renderTransactionView()}
       <FloatingButton onPress={onPress} />
     </View>

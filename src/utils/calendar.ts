@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { CalendarDays } from '../types/calendar';
+import { TransactionType } from './transaction';
 
 export enum TransactionViewType {
   Calendar = 'CALENDAR',
@@ -56,4 +57,19 @@ const calculateDays = (month: number, year: number): (CalendarDays | null)[][] =
   return rows;
 };
 
-export { calculateDays };
+const getDayMonthYear = (dateString: string) => {
+  const date = moment(dateString, 'DD-MM-YYYY');
+  return {
+    date: date.date().toString(),
+    month: date.month().toString(),
+    year: date.year().toString()
+  };
+};
+
+const getLocalStorageKey = (
+  transactionType: TransactionType,
+  year: string,
+  month: string
+): string => `${transactionType.toLowerCase()}-${year}-${month}`;
+
+export { calculateDays, getDayMonthYear, getLocalStorageKey };

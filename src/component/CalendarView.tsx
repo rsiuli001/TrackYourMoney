@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uniqueId } from 'lodash';
 import CalendarDateBlock from './CalendarDateBlock';
 import WeekBanner from './WeekBanner';
-import TransactionSummary from './TransactionSummary';
 
 export interface CalendarViewProps {}
 
