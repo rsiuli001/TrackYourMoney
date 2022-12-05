@@ -22,7 +22,6 @@ const CalendarView: FC<CalendarViewProps> = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <TransactionSummary income={5000} expense={50000} />
       <WeekBanner />
       <View>
         {calendar[key].map(row => {

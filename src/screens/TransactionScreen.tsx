@@ -1,8 +1,8 @@
+import { TransactionsContainer } from '@/component';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import COLOR from '../../assets/color';
-import { TransactionsContainer } from '../component';
 import { TransactionStackParams } from '../navigation/transactionStack';
 
 export interface TransactionScreenProps

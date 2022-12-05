@@ -17,7 +17,7 @@ const TransactionSummary: FC<TransactionSummaryProps> = ({ expense, income }): J
   return (
     <View style={styles.container}>
       {renderEl('Income', `${income}`, COLOR.blue)}
-      {renderEl('Expense', `${expense}`, COLOR.red)}
+      {renderEl('Expenses', `${expense}`, COLOR.red)}
       {renderEl('Total', `${income - expense}`, COLOR.white)}
     </View>
   );
@@ -27,11 +27,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: COLOR.underLineGrey
   },
   elContainer: {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    width: '30%'
   },
   label: {
     color: COLOR.white,

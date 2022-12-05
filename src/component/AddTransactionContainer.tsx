@@ -5,7 +5,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import COLOR from '../../assets/color';
 import { TransactionStackParams } from '../navigation/transactionStack';
 import { TransactionType } from '../utils/transaction';
-import { AddTransactionForm, AddTransfer } from '.';
+import AddTransactionForm from './AddTransactionForm';
+import AddTransfer from './AddTransfer';
 
 export interface AddtransactionContainerProps
   extends NativeStackScreenProps<TransactionStackParams, 'AddTransaction'> {}

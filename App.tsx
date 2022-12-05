@@ -21,8 +21,8 @@ const App: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLOR.black,
-  },
+    backgroundColor: COLOR.black
+  }
 });
 
 export default App;

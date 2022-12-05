@@ -1,3 +1,4 @@
+import { doesExist, getMMKVData, removeMMKVData, storeMMKVData } from '@/utils/storage';
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import {
   AddTransactionPayload,
@@ -15,6 +16,7 @@ const onAddTransaction: CaseReducer<TransactionState, PayloadAction<AddTransacti
   } else {
     state[key] = [value];
   }
+  storeTransactionData(value.type.toLowerCase(), state);
 };
 
 const onUpdateTransaction: CaseReducer<
@@ -31,4 +33,28 @@ const onDeleteTransaction: CaseReducer<
   // state.push(action.payload);
 };
 
-export { onAddTransaction, onUpdateTransaction, onDeleteTransaction };
+const fetchLocalData = (key: string) => {
+  const data: string | undefined = getMMKVData(key);
+  if (data) {
+    return JSON.parse(data);
+  }
+  return {};
+};
+
+const storeTransactionData = (key: string, state: TransactionState) => {
+  const exisitingData = doesExist(key);
+  if (exisitingData) {
+    removeMMKVData(key).then(() => {
+      storeMMKVData(key, state);
+    });
+  }
+  storeMMKVData(key, state);
+};
+
+export {
+  onAddTransaction,
+  onUpdateTransaction,
+  onDeleteTransaction,
+  fetchLocalData,
+  storeTransactionData
+};
