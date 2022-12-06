@@ -32,9 +32,9 @@ const Daily: FC<DailyProps> = (): JSX.Element => {
     [income, expense, dateObj]
   );
 
-  const renderTransaction = (t: Transaction): ReactNode => {
+  const renderTransaction = (t: Transaction, i: number): ReactNode => {
     return (
-      <TouchableOpacity style={styles.rowContainer}>
+      <TouchableOpacity key={`DAILY_TRANSACTION_${i}`} style={styles.rowContainer}>
         <View style={styles.rowLeft}>
           <Text style={styles.categoryText} numberOfLines={2} ellipsizeMode={'tail'}>
             {t.category}
@@ -81,8 +81,8 @@ const Daily: FC<DailyProps> = (): JSX.Element => {
             </View>
 
             <View>
-              {data[day].map(transaction => {
-                return renderTransaction(transaction);
+              {data[day].map((transaction, index) => {
+                return renderTransaction(transaction, index);
               })}
             </View>
           </View>
