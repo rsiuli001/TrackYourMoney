@@ -7,7 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { MONTHS } from '../data/calender';
 import { nextMonth, prevMonth } from '../redux/calendarSlice';
-import { TransactionViewType } from '../utils/calendar';
+import { getLocalStorageKey, TransactionViewType } from '../utils/calendar';
+import { fetchLocalData } from '@/redux/transactionActions';
+import { TransactionType } from '@/utils/transaction';
+import { addIncomeByMonth } from '@/redux/incomeSlice';
+import { addExpenseByMonth } from '@/redux/expenseSlice';
+import { MonthData, YearData } from '@/types/transaction';
 
 export interface CalendarHeaderProps {}
 
@@ -17,13 +22,50 @@ const CalendarHeader: FC<CalendarHeaderProps> = (): JSX.Element => {
     (state: RootState) => state.calendar
   );
 
+  const updateTransaction = (month: string, year: string) => {
+    const incomeData: YearData = fetchLocalData(
+      getLocalStorageKey(TransactionType.Income, year, month)
+    );
+    const expenseData: YearData = fetchLocalData(
+      getLocalStorageKey(TransactionType.Expense, year, month)
+    );
+
+    !!incomeData &&
+      dispatch(
+        addIncomeByMonth({
+          month,
+          year,
+          data: incomeData[month]
+        })
+      );
+
+    !!expenseData &&
+      dispatch(
+        addExpenseByMonth({
+          year,
+          month,
+          data: expenseData[month]
+        })
+      );
+  };
+
   const onPressNext = useCallback(() => {
     dispatch(nextMonth());
-  }, []);
+    if (selectedMonth === 11) {
+      updateTransaction((selectedMonth - 11).toString(), (selectedYear + 1).toString());
+    } else {
+      updateTransaction((selectedMonth + 1).toString(), selectedYear.toString());
+    }
+  }, [selectedMonth, selectedYear]);
 
   const onPressPrev = useCallback(() => {
     dispatch(prevMonth());
-  }, []);
+    if (selectedMonth === 0) {
+      updateTransaction((selectedMonth + 11).toString(), (selectedYear - 1).toString());
+    } else {
+      updateTransaction((selectedMonth - 1).toString(), selectedYear.toString());
+    }
+  }, [selectedMonth, selectedYear]);
 
   const label = useMemo(() => {
     switch (selectedViewType) {

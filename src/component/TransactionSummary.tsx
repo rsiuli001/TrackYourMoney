@@ -1,5 +1,5 @@
 import { RootState } from '@/redux/store';
-import { calculateMonthlyExpense } from '@/utils/transaction';
+import { calculateMonthlyExpense, toNumberString } from '@/utils/transaction';
 import React, { FC, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -15,22 +15,22 @@ const TransactionSummary: FC<TransactionSummaryProps> = (): JSX.Element => {
     const { selectedYear, selectedMonth } = state.calendar;
     const { expenses, income } = state;
     return calculateMonthlyExpense(
-      income[selectedYear][selectedMonth],
-      expenses[selectedYear][selectedMonth]
+      income[selectedYear]?.[selectedMonth] || {},
+      expenses[selectedYear]?.[selectedMonth] || {}
     );
   });
 
-  const renderEl = (label: string, value: string, color: string): ReactNode => (
+  const renderEl = (label: string, value: number, color: string): ReactNode => (
     <View style={styles.elContainer}>
       <Text style={styles.label}>{label}</Text>
-      <Text style={[styles.value, { color }]}>{value}</Text>
+      <Text style={[styles.value, { color }]}>{toNumberString(value, true)}</Text>
     </View>
   );
   return (
     <View style={styles.container}>
-      {renderEl('Income', `${income}`, COLOR.blue)}
-      {renderEl('Expenses', `${expense}`, COLOR.red)}
-      {renderEl('Total', `${total}`, COLOR.white)}
+      {renderEl('Income', income, COLOR.blue)}
+      {renderEl('Expenses', expense, COLOR.red)}
+      {renderEl('Total', total, COLOR.white)}
     </View>
   );
 };

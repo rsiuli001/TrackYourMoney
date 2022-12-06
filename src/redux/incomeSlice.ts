@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { TransactionState } from '../types/transaction';
 import {
+  addMonthTransactionData,
   fetchLocalData,
   onAddTransaction,
   onDeleteTransaction,
@@ -24,11 +25,12 @@ export const incomeSlice = createSlice({
   initialState,
   reducers: {
     addIncome: onAddTransaction,
+    addIncomeByMonth: addMonthTransactionData,
     updateIncome: onDeleteTransaction,
     deleteIncome: onUpdateTransaction
   }
 });
 
-export const { addIncome, deleteIncome, updateIncome } = incomeSlice.actions;
+export const { addIncome, addIncomeByMonth, deleteIncome, updateIncome } = incomeSlice.actions;
 
 export default incomeSlice.reducer;

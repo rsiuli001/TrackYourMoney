@@ -54,3 +54,9 @@ export interface UpdateTransactionPayload {
   id: string;
   value: Transaction;
 }
+
+export interface AddMonthTransactionDataPayload {
+  year: string;
+  month: string;
+  data: MonthData;
+}
