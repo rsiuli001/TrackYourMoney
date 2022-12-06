@@ -13,6 +13,7 @@ import { useMemo } from 'react';
 import { ReactNode } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import DayTag from './DayTag';
 
 export interface DailyProps {}
 
@@ -70,10 +71,7 @@ const Daily: FC<DailyProps> = (): JSX.Element => {
         return (
           <View key={index} style={styles.listEl}>
             <View style={styles.listHeader}>
-              <View style={styles.dateContainer}>
-                <Text style={styles.dateText}>{d.format('DD')}</Text>
-                <Text style={styles.dayText}>{d.format('ddd')}</Text>
-              </View>
+              <DayTag date={d.format('DD')} day={d.format('ddd')} />
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.incomeText}>{toNumberString(totalDailyIncome, true)}</Text>
                 <Text style={styles.expenseText}>{toNumberString(totalDailyExpense, true)}</Text>
@@ -110,29 +108,6 @@ const styles = StyleSheet.create({
     borderBottomColor: COLOR.underLineGrey,
     paddingBottom: 5,
     marginTop: 5
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  dateText: {
-    color: COLOR.white,
-    fontWeight: '800',
-    fontSize: 20,
-    marginLeft: 15
-  },
-  dayText: {
-    color: COLOR.white,
-    fontSize: 10,
-    backgroundColor: COLOR.grey,
-    marginTop: 4,
-    marginBottom: 4,
-    paddingLeft: 4,
-    paddingRight: 4,
-    borderRadius: 5,
-    marginLeft: 2,
-    textAlign: 'center'
   },
   incomeText: {
     color: COLOR.blue,

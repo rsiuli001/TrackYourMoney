@@ -8,6 +8,7 @@ import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
 import CalendarViewType from './CalendarViewType';
 import Daily from './Daily';
+import DayTag from './DayTag';
 import FloatingButton from './FloatingButton';
 import Monthly from './Monthly';
 import Summary from './Summary';
@@ -27,6 +28,7 @@ export {
   CalendarView,
   CalendarViewType,
   Daily,
+  DayTag,
   FloatingButton,
   Monthly,
   Summary,
