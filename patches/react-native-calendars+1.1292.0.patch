@@ -1,0 +1,656 @@
+diff --git a/node_modules/react-native-calendars/.buildkite/pipeline.yml b/node_modules/react-native-calendars/.buildkite/pipeline.yml
+index 60600a5..cd69217 100644
+--- a/node_modules/react-native-calendars/.buildkite/pipeline.yml
++++ b/node_modules/react-native-calendars/.buildkite/pipeline.yml
+@@ -1,3 +1,5 @@
++agents:
++  queue: mbms
+ env:
+   LC_ALL: 'en_US'
+ steps:
+diff --git a/node_modules/react-native-calendars/src/Profiler.d.ts b/node_modules/react-native-calendars/src/Profiler.d.ts
+index fa3ea28..5cb4cc8 100644
+--- a/node_modules/react-native-calendars/src/Profiler.d.ts
++++ b/node_modules/react-native-calendars/src/Profiler.d.ts
+@@ -1,5 +1,5 @@
+ import React, { ProfilerProps as RProfilerProps, PropsWithChildren } from 'react';
+-export declare type ProfilerProps = Pick<RProfilerProps, 'id'>;
++export type ProfilerProps = Pick<RProfilerProps, 'id'>;
+ export default class Profiler extends React.Component<PropsWithChildren<ProfilerProps>> {
+     onRender: (...profileData: any[]) => void;
+     render(): JSX.Element;
+diff --git a/node_modules/react-native-calendars/src/agenda/index.d.ts b/node_modules/react-native-calendars/src/agenda/index.d.ts
+index 617e5e2..a44a6a1 100644
+--- a/node_modules/react-native-calendars/src/agenda/index.d.ts
++++ b/node_modules/react-native-calendars/src/agenda/index.d.ts
+@@ -5,7 +5,7 @@ import { Animated, ViewStyle, LayoutChangeEvent, NativeSyntheticEvent, NativeScr
+ import { DateData, AgendaSchedule } from '../types';
+ import { CalendarListProps } from '../calendar-list';
+ import ReservationList, { ReservationListProps } from './reservation-list';
+-export declare type AgendaProps = CalendarListProps & ReservationListProps & {
++export type AgendaProps = CalendarListProps & ReservationListProps & {
+     /** the list of items that have to be displayed in agenda. If you want to render item as empty date
+     the value of date key kas to be an empty array []. If there exists no value for date key it is
+     considered that the date in question is not yet loaded */
+@@ -27,7 +27,7 @@ export declare type AgendaProps = CalendarListProps & ReservationListProps & {
+     /** Whether the knob should always be visible (when hideKnob = false) */
+     showClosingKnob?: boolean;
+ };
+-declare type State = {
++type State = {
+     scrollY: Animated.Value;
+     calendarIsReady: boolean;
+     calendarScrollable: boolean;
+diff --git a/node_modules/react-native-calendars/src/agenda/reservation-list/index.d.ts b/node_modules/react-native-calendars/src/agenda/reservation-list/index.d.ts
+index 1aa52e2..b493252 100644
+--- a/node_modules/react-native-calendars/src/agenda/reservation-list/index.d.ts
++++ b/node_modules/react-native-calendars/src/agenda/reservation-list/index.d.ts
+@@ -4,7 +4,7 @@ import { Component } from 'react';
+ import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from 'react-native';
+ import { ReservationProps } from './reservation';
+ import { AgendaEntry, AgendaSchedule, DayAgenda } from '../../types';
+-export declare type ReservationListProps = ReservationProps & {
++export type ReservationListProps = ReservationProps & {
+     /** the list of items that have to be displayed in agenda. If you want to render item as empty date
+     the value of date key kas to be an empty array []. If there exists no value for date key it is
+     considered that the date in question is not yet loaded */
+diff --git a/node_modules/react-native-calendars/src/calendar-list/item.d.ts b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
+index a08ac38..1a8aca0 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/item.d.ts
++++ b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
+@@ -2,7 +2,7 @@ import XDate from 'xdate';
+ import React from 'react';
+ import { Theme } from '../types';
+ import { CalendarProps } from '../calendar';
+-export declare type CalendarListItemProps = CalendarProps & {
++export type CalendarListItemProps = CalendarProps & {
+     item: any;
+     calendarWidth?: number;
+     calendarHeight?: number;
+diff --git a/node_modules/react-native-calendars/src/calendar/day/marking/index.d.ts b/node_modules/react-native-calendars/src/calendar/day/marking/index.d.ts
+index 4434788..97aa383 100644
+--- a/node_modules/react-native-calendars/src/calendar/day/marking/index.d.ts
++++ b/node_modules/react-native-calendars/src/calendar/day/marking/index.d.ts
+@@ -9,16 +9,16 @@ export declare enum Markings {
+     MULTI_PERIOD = "multi-period",
+     CUSTOM = "custom"
+ }
+-declare type CustomStyle = {
++type CustomStyle = {
+     container?: ViewStyle;
+     text?: TextStyle;
+ };
+-declare type DOT = {
++type DOT = {
+     key?: string;
+     color: string;
+     selectedDotColor?: string;
+ };
+-declare type PERIOD = {
++type PERIOD = {
+     color: string;
+     startingDay?: boolean;
+     endingDay?: boolean;
+diff --git a/node_modules/react-native-calendars/src/calendar/header/index.d.ts b/node_modules/react-native-calendars/src/calendar/header/index.d.ts
+index 16ddefe..a5dadee 100644
+--- a/node_modules/react-native-calendars/src/calendar/header/index.d.ts
++++ b/node_modules/react-native-calendars/src/calendar/header/index.d.ts
+@@ -49,6 +49,7 @@ export interface CalendarHeaderProps {
+     current?: string;
+     /** Left inset for the timeline calendar header, default is 72 */
+     timelineLeftInset?: number;
++    children?: ReactNode;
+ }
+ declare const CalendarHeader: React.ForwardRefExoticComponent<CalendarHeaderProps & React.RefAttributes<unknown>>;
+ export default CalendarHeader;
+diff --git a/node_modules/react-native-calendars/src/calendar/header/index.js b/node_modules/react-native-calendars/src/calendar/header/index.js
+index bd75364..845593c 100644
+--- a/node_modules/react-native-calendars/src/calendar/header/index.js
++++ b/node_modules/react-native-calendars/src/calendar/header/index.js
+@@ -133,6 +133,7 @@ const CalendarHeader = forwardRef((props, ref) => {
+         </View>
+         {_renderArrow('right')}
+       </View>
++      {!!props.children && props.children}
+       {renderDayNames()}
+     </View>);
+ });
+diff --git a/node_modules/react-native-calendars/src/calendar/index.d.ts b/node_modules/react-native-calendars/src/calendar/index.d.ts
+index a6ff4f9..5fc0145 100644
+--- a/node_modules/react-native-calendars/src/calendar/index.d.ts
++++ b/node_modules/react-native-calendars/src/calendar/index.d.ts
+@@ -3,6 +3,7 @@ import { ViewStyle, StyleProp } from 'react-native';
+ import { DateData, Theme, MarkedDates } from '../types';
+ import { CalendarHeaderProps } from './header';
+ import { DayProps } from './day/index';
++import { ReactNode } from 'react';
+ export interface CalendarProps extends CalendarHeaderProps, DayProps {
+     /** Specify theme properties to override specific styles for calendar parts */
+     theme?: Theme;
+@@ -48,6 +49,7 @@ export interface CalendarProps extends CalendarHeaderProps, DayProps {
+     customHeader?: any;
+     /** Allow selection of dates before minDate or after maxDate */
+     allowSelectionOutOfRange?: boolean;
++    children?: ReactNode;
+ }
+ /**
+  * @description: Calendar component
+diff --git a/node_modules/react-native-calendars/src/calendar/index.js b/node_modules/react-native-calendars/src/calendar/index.js
+index 0421c0d..507215e 100644
+--- a/node_modules/react-native-calendars/src/calendar/index.js
++++ b/node_modules/react-native-calendars/src/calendar/index.js
+@@ -140,7 +140,9 @@ const Calendar = (props) => {
+         const ref = customHeader ? undefined : header;
+         const CustomHeader = customHeader;
+         const HeaderComponent = customHeader ? CustomHeader : CalendarHeader;
+-        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}/>);
++        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}>
++            {!!props.children && props.children}
++        </HeaderComponent>);
+     };
+     const GestureComponent = enableSwipeMonths ? GestureRecognizer : View;
+     const swipeProps = {
+diff --git a/node_modules/react-native-calendars/src/dateutils.d.ts b/node_modules/react-native-calendars/src/dateutils.d.ts
+index 4b80156..3d6cfbe 100644
+--- a/node_modules/react-native-calendars/src/dateutils.d.ts
++++ b/node_modules/react-native-calendars/src/dateutils.d.ts
+@@ -1,6 +1,12 @@
+ /// <reference types="xdate" />
+ export declare function sameMonth(a?: XDate, b?: XDate): boolean;
+ export declare function sameDate(a?: XDate, b?: XDate): boolean;
++export declare function onSameDateRange({ firstDay, secondDay, numberOfDays, firstDateInRange, }: {
++    firstDay: string;
++    secondDay: string;
++    numberOfDays: number;
++    firstDateInRange: string;
++}): boolean;
+ export declare function sameWeek(a: string, b: string, firstDayOfWeek: number): boolean | undefined;
+ export declare function isPastDate(date: string): boolean;
+ export declare function isToday(date?: XDate | string): boolean;
+diff --git a/node_modules/react-native-calendars/src/dateutils.js b/node_modules/react-native-calendars/src/dateutils.js
+index 30339ba..34ac965 100644
+--- a/node_modules/react-native-calendars/src/dateutils.js
++++ b/node_modules/react-native-calendars/src/dateutils.js
+@@ -20,6 +20,18 @@ export function sameDate(a, b) {
+         return a?.getFullYear() === b?.getFullYear() && a?.getMonth() === b?.getMonth() && a?.getDate() === b?.getDate();
+     }
+ }
++export function onSameDateRange({ firstDay, secondDay, numberOfDays, firstDateInRange, }) {
++    const aDate = new XDate(firstDay);
++    const bDate = new XDate(secondDay);
++    const firstDayDate = new XDate(firstDateInRange);
++    const aDiff = aDate.getTime() - firstDayDate.getTime();
++    const bDiff = bDate.getTime() - firstDayDate.getTime();
++    const aTotalDays = Math.ceil(aDiff / (1000 * 3600 * 24));
++    const bTotalDays = Math.ceil(bDiff / (1000 * 3600 * 24));
++    const aWeek = Math.floor(aTotalDays / numberOfDays);
++    const bWeek = Math.floor(bTotalDays / numberOfDays);
++    return aWeek === bWeek;
++}
+ export function sameWeek(a, b, firstDayOfWeek) {
+     const weekDates = getWeekDates(a, firstDayOfWeek, 'yyyy-MM-dd');
+     const element = weekDates instanceof XDate ? new XDate(b) : b;
+diff --git a/node_modules/react-native-calendars/src/day-state-manager.d.ts b/node_modules/react-native-calendars/src/day-state-manager.d.ts
+index a5b79f5..7313332 100644
+--- a/node_modules/react-native-calendars/src/day-state-manager.d.ts
++++ b/node_modules/react-native-calendars/src/day-state-manager.d.ts
+@@ -1,2 +1,2 @@
+ /// <reference types="xdate" />
+-export declare function getState(day: XDate, current: XDate, props: any): string;
++export declare function getState(day: XDate, current: XDate, props: any, disableDaySelection?: boolean): string;
+diff --git a/node_modules/react-native-calendars/src/day-state-manager.js b/node_modules/react-native-calendars/src/day-state-manager.js
+index 3610e19..514e854 100644
+--- a/node_modules/react-native-calendars/src/day-state-manager.js
++++ b/node_modules/react-native-calendars/src/day-state-manager.js
+@@ -1,9 +1,9 @@
+ const { isToday, isDateNotInRange, sameMonth } = require('./dateutils');
+ const { toMarkingFormat } = require('./interface');
+-export function getState(day, current, props) {
++export function getState(day, current, props, disableDaySelection) {
+     const { minDate, maxDate, disabledByDefault, context } = props;
+     let state = '';
+-    if ((context?.date ?? toMarkingFormat(current)) === toMarkingFormat(day)) {
++    if (!disableDaySelection && ((context?.date ?? toMarkingFormat(current)) === toMarkingFormat(day))) {
+         state = 'selected';
+     }
+     else if (isToday(day)) {
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.d.ts
+index e86743d..f315ad6 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.d.ts
++++ b/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.d.ts
+@@ -1,5 +1,6 @@
+ /// <reference types="react" />
+ import { CalendarListProps } from '../../calendar-list';
++export declare const NUMBER_OF_PAGES = 6;
+ export interface WeekCalendarProps extends CalendarListProps {
+     /** whether to have shadow/elevation for the calendar */
+     allowShadow?: boolean;
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.js b/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.js
+index 587076e..d8c6e95 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/WeekCalendar/index.js
+@@ -1,7 +1,7 @@
+ import XDate from 'xdate';
+ import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+ import { FlatList, View } from 'react-native';
+-import { sameWeek } from '../../dateutils';
++import { sameWeek, onSameDateRange } from '../../dateutils';
+ import { toMarkingFormat } from '../../interface';
+ import styleConstructor from '../style';
+ import WeekDaysNames from '../../commons/WeekDaysNames';
+@@ -11,7 +11,7 @@ import constants from '../../commons/constants';
+ import { extractCalendarProps } from '../../componentUpdater';
+ import CalendarContext from '../Context';
+ import { useDidUpdate } from '../../hooks';
+-const NUMBER_OF_PAGES = 6;
++export const NUMBER_OF_PAGES = 6;
+ const NUM_OF_ITEMS = NUMBER_OF_PAGES * 2 + 1; // NUMBER_OF_PAGES before + NUMBER_OF_PAGES after + current
+ const APPLY_ANDROID_FIX = constants.isAndroid && constants.isRTL;
+ /**
+@@ -20,7 +20,7 @@ const APPLY_ANDROID_FIX = constants.isAndroid && constants.isRTL;
+  * @example: https://github.com/wix/react-native-calendars/blob/master/example/src/screens/expandableCalendar.js
+  */
+ const WeekCalendar = (props) => {
+-    const { calendarWidth, hideDayNames, current, theme, testID } = props;
++    const { calendarWidth, hideDayNames, current, theme, testID, } = props;
+     const context = useContext(CalendarContext);
+     const { allowShadow = true, ...calendarListProps } = props;
+     const { style: propsStyle, onDayPress, firstDay = 0, ...others } = extractCalendarProps(calendarListProps);
+@@ -32,9 +32,21 @@ const WeekCalendar = (props) => {
+     const changedItems = useRef(constants.isRTL);
+     const list = useRef(null);
+     const currentIndex = useRef(NUMBER_OF_PAGES);
++    useDidUpdate(() => {
++        items.current = getDatesArray(date, firstDay, numberOfDays);
++        setListData(items.current);
++        visibleWeek.current = date;
++    }, [numberOfDays]);
+     useDidUpdate(() => {
+         if (updateSource !== UpdateSources.WEEK_SCROLL) {
+-            const pageIndex = items.current.findIndex(item => sameWeek(item, date, firstDay));
++            const pageIndex = items.current.findIndex(item => isCustomNumberOfDays(numberOfDays) ?
++                onSameDateRange({
++                    firstDay: item,
++                    secondDay: date,
++                    numberOfDays: numberOfDays,
++                    firstDateInRange: item
++                }) :
++                sameWeek(item, date, firstDay));
+             if (pageIndex !== currentIndex.current) {
+                 if (pageIndex >= 0) {
+                     visibleWeek.current = items.current[pageIndex];
+@@ -137,6 +149,13 @@ const WeekCalendar = (props) => {
+       </View>
+     </View>);
+ };
++function getDateForDayRange(date, weekIndex, numberOfDays) {
++    const d = new XDate(date);
++    if (weekIndex !== 0) {
++        d.addDays(numberOfDays * weekIndex);
++    }
++    return toMarkingFormat(d);
++}
+ function getDate(date, firstDay, weekIndex, numberOfDays) {
+     const d = new XDate(date);
+     // get the first day of the week as date (for the on scroll mark)
+@@ -155,8 +174,14 @@ function getDate(date, firstDay, weekIndex, numberOfDays) {
+ }
+ function getDatesArray(date, firstDay, numberOfDays) {
+     return [...Array(NUM_OF_ITEMS).keys()].map((index) => {
+-        return getDate(date, firstDay, index - NUMBER_OF_PAGES, numberOfDays);
++        if (isCustomNumberOfDays(numberOfDays)) {
++            return getDateForDayRange(date, index - NUMBER_OF_PAGES, numberOfDays);
++        }
++        return getDate(date, firstDay, index - NUMBER_OF_PAGES);
+     });
+ }
++function isCustomNumberOfDays(numberOfDays) {
++    return numberOfDays && numberOfDays > 1;
++}
+ WeekCalendar.displayName = 'WeekCalendar';
+ export default WeekCalendar;
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.d.ts
+new file mode 100644
+index 0000000..3ab65f2
+--- /dev/null
++++ b/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.d.ts
+@@ -0,0 +1,11 @@
++/// <reference types="react" />
++import { CalendarContextProviderProps, ExpandableCalendarProps } from 'react-native-calendars';
++export declare const testIdExpandableCalendar = "myExpandableCalendar";
++export declare const expandableCalendarTestIDs: (testId: string) => {
++    leftArrow: string;
++    rightArrow: string;
++};
++export declare const generateExpandableCalendarWithContext: ({ expandableCalendarProps, calendarContextProps, }?: {
++    expandableCalendarProps?: Partial<ExpandableCalendarProps> | undefined;
++    calendarContextProps?: Partial<CalendarContextProviderProps> | undefined;
++}) => JSX.Element;
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.js b/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.js
+new file mode 100644
+index 0000000..1ffa0ec
+--- /dev/null
++++ b/node_modules/react-native-calendars/src/expandableCalendar/__test__/expandableCalendarTestKit.js
+@@ -0,0 +1,24 @@
++import React from 'react';
++import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
++import { toMarkingFormat } from '../../interface';
++const XDate = require('xdate');
++const today = new XDate();
++export const testIdExpandableCalendar = 'myExpandableCalendar';
++export const expandableCalendarTestIDs = (testId) => {
++    return {
++        leftArrow: `${testId}.leftArrow`,
++        rightArrow: `${testId}.rightArrow`,
++    };
++};
++export const generateExpandableCalendarWithContext = ({ expandableCalendarProps, calendarContextProps, } = {}) => {
++    const defaultContextProps = {
++        date: toMarkingFormat(today),
++        showTodayButton: true,
++    };
++    const defaultExpandableCalendarProps = {
++        testID: testIdExpandableCalendar,
++    };
++    return (<CalendarProvider {...defaultContextProps} {...calendarContextProps}>
++      <ExpandableCalendar {...defaultExpandableCalendarProps} {...expandableCalendarProps}/>
++    </CalendarProvider>);
++};
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/__test__/index.spec.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/__test__/index.spec.d.ts
+new file mode 100644
+index 0000000..cb0ff5c
+--- /dev/null
++++ b/node_modules/react-native-calendars/src/expandableCalendar/__test__/index.spec.d.ts
+@@ -0,0 +1 @@
++export {};
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/driver.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/driver.d.ts
+index f68965a..54bad55 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/driver.d.ts
++++ b/node_modules/react-native-calendars/src/expandableCalendar/driver.d.ts
+@@ -9,6 +9,9 @@ export declare class ExpandableCalendarDriver {
+     /** Container */
+     getExpandableContainer(): ReactTestInstance;
+     isCalendarExpanded(): boolean;
++    /** Header */
++    getRightArrow(): ReactTestInstance;
++    getLeftArrow(): ReactTestInstance;
+     /** Knob and Position */
+     get knobTestID(): string;
+     getKnob(): any;
+@@ -23,4 +26,11 @@ export declare class ExpandableCalendarDriver {
+     getWeekDayTestID(date: string): string;
+     getWeekDay(date: string): ReactTestInstance;
+     selectWeekDay(date: string): void;
++    /** today button */
++    getTodayButton(): any;
++    /** actions */
++    pressOnTodayButton(): void;
++    pressOnHeaderArrow({ left }?: {
++        left?: boolean;
++    }): void;
+ }
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/index.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/index.d.ts
+index 7416d0f..297f951 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/index.d.ts
++++ b/node_modules/react-native-calendars/src/expandableCalendar/index.d.ts
+@@ -1,7 +1,7 @@
+ /// <reference types="react" />
+ import { ImageSourcePropType } from 'react-native';
+ import { CalendarListProps } from '../calendar-list';
+-declare enum Positions {
++export declare enum Positions {
+     CLOSED = "closed",
+     OPEN = "open"
+ }
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/index.js b/node_modules/react-native-calendars/src/expandableCalendar/index.js
+index 5f2f4d9..df31d4a 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/index.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/index.js
+@@ -16,14 +16,14 @@ import WeekCalendar from './WeekCalendar';
+ import Context from './Context';
+ import constants from '../commons/constants';
+ import { UpdateSources } from './commons';
+-var Positions;
++export var Positions;
+ (function (Positions) {
+     Positions["CLOSED"] = "closed";
+     Positions["OPEN"] = "open";
+ })(Positions || (Positions = {}));
+ const SPEED = 20;
+ const BOUNCINESS = 6;
+-const CLOSED_HEIGHT = constants.isIOS ? 116 : 120; // header + 1 week
++const CLOSED_HEIGHT = 120; // header + 1 week
+ const WEEK_HEIGHT = 46;
+ const DAY_NAMES_PADDING = 24;
+ const PAN_GESTURE_THRESHOLD = 30;
+@@ -99,10 +99,14 @@ const ExpandableCalendar = (props) => {
+         return CLOSED_HEIGHT + (WEEK_HEIGHT * (numberOfWeeks.current - 1)) + (hideKnob ? 12 : KNOB_CONTAINER_HEIGHT) + (constants.isAndroid ? 3 : 0);
+     };
+     const openHeight = useRef(getOpenHeight());
+-    const closedHeight = useRef(CLOSED_HEIGHT + (hideKnob || Number(numberOfDays) > 1 ? 0 : KNOB_CONTAINER_HEIGHT));
+-    const startHeight = isOpen ? openHeight.current : closedHeight.current;
++    const closedHeight = useMemo(() => CLOSED_HEIGHT + (hideKnob || Number(numberOfDays) > 1 ? 0 : KNOB_CONTAINER_HEIGHT), [numberOfDays, hideKnob]);
++    const startHeight = useMemo(() => isOpen ? openHeight.current : closedHeight, [closedHeight, isOpen]);
+     const _height = useRef(startHeight);
+-    const deltaY = useRef(new Animated.Value(startHeight));
++    const deltaY = useMemo(() => new Animated.Value(startHeight), [startHeight]);
++    useEffect(() => {
++        _height.current = startHeight;
++        deltaY.setValue(startHeight);
++    }, [startHeight]);
+     const headerDeltaY = useRef(new Animated.Value(isOpen ? -HEADER_HEIGHT : 0));
+     /** Components' refs */
+     const wrapper = useRef();
+@@ -135,7 +139,7 @@ const ExpandableCalendar = (props) => {
+                 paddingRight: isNumber(rightPaddings) ? rightPaddings + 6 : DAY_NAMES_PADDING
+             }
+         ];
+-    }, [calendarStyle, numberOfDays]);
++    }, [calendarStyle]);
+     const animatedHeaderStyle = useMemo(() => {
+         return [style.current.header, { height: HEADER_HEIGHT + 10, top: headerDeltaY.current }];
+     }, [headerDeltaY.current]);
+@@ -146,8 +150,8 @@ const ExpandableCalendar = (props) => {
+         return [allowShadow && style.current.containerShadow, propsStyle];
+     }, [allowShadow, propsStyle]);
+     const wrapperStyle = useMemo(() => {
+-        return { height: deltaY.current };
+-    }, [deltaY.current]);
++        return { height: deltaY };
++    }, [deltaY]);
+     /** Effects */
+     useEffect(() => {
+         if (AccessibilityInfo) {
+@@ -218,7 +222,7 @@ const ExpandableCalendar = (props) => {
+     };
+     const handlePanResponderMove = (_, gestureState) => {
+         // limit min height to closed height
+-        _wrapperStyles.current.style.height = Math.max(closedHeight.current, _height.current + gestureState.dy);
++        _wrapperStyles.current.style.height = Math.max(closedHeight, _height.current + gestureState.dy);
+         if (!horizontal) {
+             // vertical CalenderList header
+             _headerStyles.style.top = Math.min(Math.max(-gestureState.dy, -HEADER_HEIGHT), 0);
+@@ -247,20 +251,20 @@ const ExpandableCalendar = (props) => {
+     /** Animated */
+     const bounceToPosition = (toValue = 0) => {
+         if (!disablePan) {
+-            const threshold = isOpen ? openHeight.current - closeThreshold : closedHeight.current + openThreshold;
++            const threshold = isOpen ? openHeight.current - closeThreshold : closedHeight + openThreshold;
+             let _isOpen = _height.current >= threshold;
+-            const newValue = _isOpen ? openHeight.current : closedHeight.current;
+-            deltaY.current.setValue(_height.current); // set the start position for the animated value
++            const newValue = _isOpen ? openHeight.current : closedHeight;
++            deltaY.setValue(_height.current); // set the start position for the animated value
+             _height.current = toValue || newValue;
+             _isOpen = _height.current >= threshold; // re-check after _height.current was set
+-            Animated.spring(deltaY.current, {
++            Animated.spring(deltaY, {
+                 toValue: _height.current,
+                 speed: SPEED,
+                 bounciness: BOUNCINESS,
+                 useNativeDriver: false
+             }).start();
+             onCalendarToggled?.(_isOpen);
+-            setPosition(() => _height.current === closedHeight.current ? Positions.CLOSED : Positions.OPEN);
++            setPosition(() => _height.current === closedHeight ? Positions.CLOSED : Positions.OPEN);
+             closeHeader(_isOpen);
+             resetWeekCalendarOpacity(_isOpen);
+         }
+@@ -284,13 +288,13 @@ const ExpandableCalendar = (props) => {
+         setTimeout(() => {
+             // to allows setDate to be completed
+             if (isOpen) {
+-                bounceToPosition(closedHeight.current);
++                bounceToPosition(closedHeight);
+             }
+         }, 0);
+-    }, [isOpen]);
++    }, [isOpen, closedHeight]);
+     const toggleCalendarPosition = useCallback(() => {
+-        bounceToPosition(isOpen ? closedHeight.current : openHeight.current);
+-    }, [isOpen, bounceToPosition]);
++        bounceToPosition(isOpen ? closedHeight : openHeight.current);
++    }, [isOpen, bounceToPosition, closedHeight]);
+     /** Events */
+     const _onPressArrowLeft = useCallback((method, month) => {
+         onPressArrowLeft?.(method, month);
+@@ -380,7 +384,7 @@ const ExpandableCalendar = (props) => {
+     }, [numberOfDays]);
+     const _headerStyle = useMemo(() => {
+         return [numberOfDaysHeaderStyle, props.headerStyle];
+-    }, [props.headerStyle]);
++    }, [props.headerStyle, numberOfDaysHeaderStyle]);
+     const renderCalendarList = () => {
+         return (<CalendarList testID={`${testID}.calendarList`} horizontal={horizontal} firstDay={firstDay} calendarStyle={calendarStyle} {...others} current={date} theme={themeObject} ref={calendarList} onDayPress={_onDayPress} onVisibleMonthsChange={onVisibleMonthsChange} pagingEnabled scrollEnabled={isOpen} hideArrows={shouldHideArrows} onPressArrowLeft={_onPressArrowLeft} onPressArrowRight={_onPressArrowRight} hideExtraDays={!horizontal && isOpen} renderArrow={_renderArrow} staticHeader numberOfDays={numberOfDays} headerStyle={_headerStyle} timelineLeftInset={timelineLeftInset}/>);
+     };
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/week.d.ts b/node_modules/react-native-calendars/src/expandableCalendar/week.d.ts
+index a31dd3a..beed84a 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/week.d.ts
++++ b/node_modules/react-native-calendars/src/expandableCalendar/week.d.ts
+@@ -1,7 +1,7 @@
+ import React from 'react';
+ import { CalendarProps } from '../calendar';
+ import { CalendarContextProps } from './Context';
+-export declare type WeekProps = CalendarProps & {
++export type WeekProps = CalendarProps & {
+     context?: CalendarContextProps;
+ };
+ declare const Week: React.MemoExoticComponent<(props: WeekProps) => JSX.Element>;
+diff --git a/node_modules/react-native-calendars/src/expandableCalendar/week.js b/node_modules/react-native-calendars/src/expandableCalendar/week.js
+index ee0a3af..2d37a0e 100644
+--- a/node_modules/react-native-calendars/src/expandableCalendar/week.js
++++ b/node_modules/react-native-calendars/src/expandableCalendar/week.js
+@@ -16,6 +16,9 @@ function arePropsEqual(prevProps, nextProps) {
+ const Week = React.memo((props) => {
+     const { theme, current, firstDay, hideExtraDays, markedDates, onDayPress, onDayLongPress, style: propsStyle, numberOfDays = 1, timelineLeftInset, testID, } = props;
+     const style = useRef(styleConstructor(theme));
++    const disableDaySelection = useMemo(() => {
++        return !!numberOfDays && numberOfDays > 1;
++    }, [numberOfDays]);
+     const getWeek = useCallback((date) => {
+         if (date) {
+             return getWeekDates(date, firstDay);
+@@ -35,7 +38,7 @@ const Week = React.memo((props) => {
+         }
+         const dayString = toMarkingFormat(day);
+         return (<View style={style.current.dayContainer} key={id}>
+-        <Day {...dayProps} testID={`${testID}.day_${dayString}`} date={dayString} state={getState(day, currXdate, props)} marking={markedDates?.[dayString]} onPress={onDayPress} onLongPress={onDayLongPress}/>
++        <Day {...dayProps} testID={`${testID}.day_${dayString}`} date={dayString} state={getState(day, currXdate, props, disableDaySelection)} marking={disableDaySelection ? { ...markedDates?.[dayString], disableTouchEvent: true } : markedDates?.[dayString]} onPress={onDayPress} onLongPress={onDayLongPress}/>
+       </View>);
+     };
+     const renderWeek = () => {
+diff --git a/node_modules/react-native-calendars/src/timeline-list/index.js b/node_modules/react-native-calendars/src/timeline-list/index.js
+index 2085582..789d410 100644
+--- a/node_modules/react-native-calendars/src/timeline-list/index.js
++++ b/node_modules/react-native-calendars/src/timeline-list/index.js
+@@ -15,20 +15,23 @@ const TimelineList = (props) => {
+     const prevDate = useRef(date);
+     const [timelineOffset, setTimelineOffset] = useState();
+     const { pages, pagesRef, resetPages, resetPagesDebounce, scrollToPageDebounce, shouldResetPages, isOutOfRange } = useTimelinePages({ date, listRef, numberOfDays });
++    const scrollToCurrentDate = useCallback((date) => {
++        const datePageIndex = pagesRef.current.indexOf(date);
++        if (updateSource !== UpdateSources.LIST_DRAG) {
++            if (isOutOfRange(datePageIndex)) {
++                updateSource === UpdateSources.DAY_PRESS ? resetPages(date) : resetPagesDebounce(date);
++            }
++            else {
++                scrollToPageDebounce(datePageIndex);
++            }
++        }
++        prevDate.current = date;
++    }, [updateSource]);
+     useEffect(() => {
+         if (date !== prevDate.current) {
+-            const datePageIndex = pagesRef.current.indexOf(date);
+-            if (updateSource !== UpdateSources.LIST_DRAG) {
+-                if (isOutOfRange(datePageIndex)) {
+-                    updateSource === UpdateSources.DAY_PRESS ? resetPages(date) : resetPagesDebounce(date);
+-                }
+-                else {
+-                    scrollToPageDebounce(datePageIndex);
+-                }
+-            }
+-            prevDate.current = date;
++            scrollToCurrentDate(date);
+         }
+-    }, [date, updateSource]);
++    }, [date]);
+     const onScroll = useCallback(() => {
+         if (shouldResetPages.current) {
+             resetPagesDebounce.cancel();
+diff --git a/node_modules/react-native-calendars/src/timeline-list/useTimelinePages.js b/node_modules/react-native-calendars/src/timeline-list/useTimelinePages.js
+index 1d9b4db..891375d 100644
+--- a/node_modules/react-native-calendars/src/timeline-list/useTimelinePages.js
++++ b/node_modules/react-native-calendars/src/timeline-list/useTimelinePages.js
+@@ -14,9 +14,11 @@ const UseTimelinePages = ({ date, listRef, numberOfDays }) => {
+     const [pages, setPages] = useState(pagesRef.current);
+     const shouldResetPages = useRef(false);
+     useEffect(() => {
+-        setPages(times(PAGES_COUNT, i => {
++        const updatedDays = times(PAGES_COUNT, i => {
+             return generateDay(date, numberOfDays * (i - Math.floor(PAGES_COUNT / 2)));
+-        }));
++        });
++        pagesRef.current = updatedDays;
++        setPages(updatedDays);
+     }, [numberOfDays]);
+     const isOutOfRange = useCallback((index) => {
+         return !inRange(index, 0, PAGES_COUNT);
+diff --git a/node_modules/react-native-calendars/src/types.d.ts b/node_modules/react-native-calendars/src/types.d.ts
+index 218bb5a..a5f3b4a 100644
+--- a/node_modules/react-native-calendars/src/types.d.ts
++++ b/node_modules/react-native-calendars/src/types.d.ts
+@@ -1,13 +1,13 @@
+ /// <reference types="xdate" />
+ import { ViewStyle, TextStyle } from 'react-native';
+ import { MarkingProps } from './calendar/day/marking';
+-export declare type MarkingTypes = 'dot' | 'multi-dot' | 'period' | 'multi-period' | 'custom';
+-export declare type MarkedDates = {
++export type MarkingTypes = 'dot' | 'multi-dot' | 'period' | 'multi-period' | 'custom';
++export type MarkedDates = {
+     [key: string]: MarkingProps;
+ };
+-export declare type DayState = 'selected' | 'disabled' | 'inactive' | 'today' | '';
+-export declare type Direction = 'left' | 'right';
+-export declare type DateData = {
++export type DayState = 'selected' | 'disabled' | 'inactive' | 'today' | '';
++export type Direction = 'left' | 'right';
++export type DateData = {
+     year: number;
+     month: number;
+     day: number;
+@@ -93,12 +93,12 @@ export interface Theme {
+         };
+     };
+ }
+-export declare type AgendaEntry = {
++export type AgendaEntry = {
+     name: string;
+     height: number;
+     day: string;
+ };
+-export declare type AgendaSchedule = {
++export type AgendaSchedule = {
+     [date: string]: AgendaEntry[];
+ };
+ export interface DayAgenda {

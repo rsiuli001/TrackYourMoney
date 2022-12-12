@@ -60,3 +60,9 @@ export interface AddMonthTransactionDataPayload {
   month: string;
   data: MonthData;
 }
+
+export interface PickerDataType {
+  id: string,
+  label: string
+  type
+}

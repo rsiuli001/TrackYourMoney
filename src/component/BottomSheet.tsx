@@ -1,3 +1,4 @@
+import COLOR from '@assets/color';
 import React, { FC, ReactNode, useEffect, useRef } from 'react';
 import { Animated, Dimensions, Modal, PanResponder, StyleSheet, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -60,7 +61,7 @@ const BottomSheet: FC<BottomSheetProps> = ({ visible, onRequestClose, children }
           {...panResponder.panHandlers}
         >
           <ButtonWrapper style={styles.header} onPress={onDismiss}>
-            <Ionicons name={'close-sharp'} size={24} />
+            <Ionicons name={'close-sharp'} size={24} color={COLOR.black} />
           </ButtonWrapper>
           {children}
         </Animated.View>
@@ -74,17 +75,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.2)',
     flex: 1,
     justifyContent: 'flex-end'
+    // backgroundColor: COLOR.black
   },
   header: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    marginRight: 10
+    // marginRight: 10,
+    paddingBottom: 10,
+    paddingRight: 10
   },
   container: {
-    backgroundColor: 'white',
+    // backgroundColor: COLOR.black,
+    backgroundColor: COLOR.grey,
     paddingTop: 12,
     borderTopRightRadius: 12,
-    borderTopLeftRadius: 12
+    borderTopLeftRadius: 12,
+    // paddingBottom: 15
   }
 });
 

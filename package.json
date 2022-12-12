@@ -5,11 +5,13 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "postinstall": "patch-package",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^6.7.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
@@ -18,9 +20,11 @@
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "patch-package": "^6.5.0",
+    "postinstall-postinstall": "^2.1.0",
     "react": "18.1.0",
     "react-native": "0.70.6",
-    "react-native-calendars": "^1.1291.1",
+    "react-native-calendars": "^1.1292.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-mmkv": "^2.5.1",
     "react-native-reanimated": "^2.12.0",

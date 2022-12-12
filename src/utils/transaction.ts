@@ -7,6 +7,11 @@ export enum TransactionType {
   Transfer = 'TRANSFER'
 }
 
+export enum PickerType {
+  Account = 'ACCOUNT',
+  Category = 'CATEGORY'
+}
+
 export enum Months {
   JAN = 'JANUARY',
   FEB = 'FEBRUARY',

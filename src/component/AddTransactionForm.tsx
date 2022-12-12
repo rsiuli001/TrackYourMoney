@@ -8,15 +8,40 @@ import COLOR from '../../assets/color';
 import { addExpense } from '../redux/expenseSlice';
 import { addIncome } from '../redux/incomeSlice';
 import { TransactionFormStyles } from '../styles/TransactionForm';
-import { AddTransactionFormValues, Transaction } from '../types/transaction';
-import { TransactionType } from '../utils/transaction';
+import { AddTransactionFormValues, PickerDataType, Transaction } from '../types/transaction';
+import { PickerType, TransactionType } from '../utils/transaction';
 import BottomSheet from './BottomSheet';
 import Button from './Button';
+import DatePickerModal from './DatePickerModal';
 import Input from './Input';
+import Picker from './Picker';
 
 export interface AddTransactionFormProps {
   transactionType: TransactionType;
 }
+
+const accountData: PickerDataType[] = [
+  {
+    id: '1',
+    label: 'Cash',
+    type: PickerType.Account
+  },
+  {
+    id: '2',
+    label: 'Bank Accounts',
+    type: PickerType.Account
+  },
+  {
+    id: '5',
+    label: 'Salary Accounts',
+    type: PickerType.Account
+  },
+  {
+    id: '4',
+    label: 'Credit Cards',
+    type: PickerType.Account
+  }
+];
 
 const AddTransactionForm: FC<AddTransactionFormProps> = ({ transactionType }): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
@@ -78,30 +103,29 @@ const AddTransactionForm: FC<AddTransactionFormProps> = ({ transactionType }): J
     <View style={TransactionFormStyles.container}>
       <>
         <View style={TransactionFormStyles.formTopHalf}>
-          <Input
-            // editable={false}
-            formLabel={'Date'}
-            onChangeText={handleChange('date')}
-            onBlur={handleBlur('date')}
+          <DatePickerModal
             value={values.date}
-            underLineColorFocus={COLOR.blue}
-            returnKeyType={'next'}
+            onChange={(dateString: string) => {
+              handleChange({ target: { name: 'date', value: dateString } });
+            }}
           />
 
-          <Input
-            formLabel={'Account'}
-            onChangeText={handleChange('account')}
-            onBlur={handleBlur('account')}
+          <Picker
+            label={'Account'}
+            data={accountData}
             value={values.account}
-            underLineColorFocus={COLOR.blue}
+            onChange={(d: PickerDataType) => {
+              handleChange({ target: { name: 'account', value: d.label } });
+            }}
           />
 
-          <Input
-            formLabel={'Category'}
-            onChangeText={handleChange('category')}
-            onBlur={handleBlur('category')}
+          <Picker
+            label={'Category'}
+            data={accountData}
             value={values.category}
-            underLineColorFocus={COLOR.blue}
+            onChange={(d: PickerDataType) => {
+              handleChange({ target: { name: 'category', value: d.label } });
+            }}
           />
 
           <Input
@@ -112,9 +136,9 @@ const AddTransactionForm: FC<AddTransactionFormProps> = ({ transactionType }): J
             value={values.amount.toString()}
             underLineColorFocus={COLOR.blue}
             keyboardType={'numeric'}
-            onFocus={() => {
-              console.log('debug: field 4 on focus');
-            }}
+            // onFocus={() => {
+            //   console.log('debug: field 4 on focus');
+            // }}
           />
 
           <Input

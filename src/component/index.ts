@@ -9,10 +9,12 @@ import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
 import CalendarViewType from './CalendarViewType';
 import Daily from './Daily';
-import DatePicker from './DatePicker';
+import DatePickerModal from './DatePickerModal';
+import Day from './Day';
 import DayTag from './DayTag';
 import FloatingButton from './FloatingButton';
 import Monthly from './Monthly';
+import Picker from './Picker';
 import Summary from './Summary';
 import TransactionsContainer from './Transactions';
 import TransactionSummary from './TransactionSummary';
@@ -31,10 +33,12 @@ export {
   CalendarView,
   CalendarViewType,
   Daily,
-  DatePicker,
+  DatePickerModal,
+  Day,
   DayTag,
   FloatingButton,
   Monthly,
+  Picker,
   Summary,
   TransactionsContainer,
   TransactionSummary,
