@@ -71,6 +71,7 @@ const DatePickerModal: FC<DatePickerModalProps> = ({ value, onChange }): JSX.Ele
             disableAllTouchEventsForDisabledDays={true}
             onDayPress={onDayPressed}
             enableSwipeMonths={true}
+            disableCalendar={false}
           />
         </View>
       </BottomSheet>

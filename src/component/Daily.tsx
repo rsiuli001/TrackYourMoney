@@ -92,8 +92,8 @@ const Daily: FC<DailyProps> = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: COLOR.blackDiv
+    // flex: 1,
+    // backgroundColor: COLOR.blackDiv
   },
   listEl: {
     backgroundColor: COLOR.black,

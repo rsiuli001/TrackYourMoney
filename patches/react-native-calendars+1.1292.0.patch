@@ -104,19 +104,30 @@ index 16ddefe..a5dadee 100644
  declare const CalendarHeader: React.ForwardRefExoticComponent<CalendarHeaderProps & React.RefAttributes<unknown>>;
  export default CalendarHeader;
 diff --git a/node_modules/react-native-calendars/src/calendar/header/index.js b/node_modules/react-native-calendars/src/calendar/header/index.js
-index bd75364..845593c 100644
+index bd75364..068c362 100644
 --- a/node_modules/react-native-calendars/src/calendar/header/index.js
 +++ b/node_modules/react-native-calendars/src/calendar/header/index.js
-@@ -133,6 +133,7 @@ const CalendarHeader = forwardRef((props, ref) => {
+@@ -9,7 +9,7 @@ const accessibilityActions = [
+     { name: 'decrement', label: 'decrement' }
+ ];
+ const CalendarHeader = forwardRef((props, ref) => {
+-    const { theme, style: propsStyle, addMonth: propsAddMonth, month, monthFormat, firstDay, hideDayNames, showWeekNumbers, hideArrows, renderArrow, onPressArrowLeft, onPressArrowRight, arrowsHitSlop = 20, disableArrowLeft, disableArrowRight, disabledDaysIndexes, displayLoadingIndicator, customHeaderTitle, renderHeader, webAriaLevel, testID, accessibilityElementsHidden, importantForAccessibility, numberOfDays, current = '', timelineLeftInset } = props;
++    const { theme, style: propsStyle, addMonth: propsAddMonth, month, monthFormat, firstDay, hideDayNames, showWeekNumbers, hideArrows, renderArrow, onPressArrowLeft, onPressArrowRight, arrowsHitSlop = 20, disableArrowLeft, disableArrowRight, disabledDaysIndexes, displayLoadingIndicator, customHeaderTitle, renderHeader, webAriaLevel, testID, accessibilityElementsHidden, importantForAccessibility, numberOfDays, current = '', timelineLeftInset, disableWeek } = props;
+     const numberOfDaysCondition = useMemo(() => {
+         return numberOfDays && numberOfDays > 1;
+     }, [numberOfDays]);
+@@ -133,7 +133,8 @@ const CalendarHeader = forwardRef((props, ref) => {
          </View>
          {_renderArrow('right')}
        </View>
+-      {renderDayNames()}
 +      {!!props.children && props.children}
-       {renderDayNames()}
++      {!disableWeek && renderDayNames()}
      </View>);
  });
+ export default CalendarHeader;
 diff --git a/node_modules/react-native-calendars/src/calendar/index.d.ts b/node_modules/react-native-calendars/src/calendar/index.d.ts
-index a6ff4f9..5fc0145 100644
+index a6ff4f9..f678fca 100644
 --- a/node_modules/react-native-calendars/src/calendar/index.d.ts
 +++ b/node_modules/react-native-calendars/src/calendar/index.d.ts
 @@ -3,6 +3,7 @@ import { ViewStyle, StyleProp } from 'react-native';
@@ -127,29 +138,58 @@ index a6ff4f9..5fc0145 100644
  export interface CalendarProps extends CalendarHeaderProps, DayProps {
      /** Specify theme properties to override specific styles for calendar parts */
      theme?: Theme;
-@@ -48,6 +49,7 @@ export interface CalendarProps extends CalendarHeaderProps, DayProps {
+@@ -48,6 +49,9 @@ export interface CalendarProps extends CalendarHeaderProps, DayProps {
      customHeader?: any;
      /** Allow selection of dates before minDate or after maxDate */
      allowSelectionOutOfRange?: boolean;
 +    children?: ReactNode;
++    headerChildren?: ReactNode;
++    disableCalendar: boolean;
  }
  /**
   * @description: Calendar component
 diff --git a/node_modules/react-native-calendars/src/calendar/index.js b/node_modules/react-native-calendars/src/calendar/index.js
-index 0421c0d..507215e 100644
+index 0421c0d..ecb0491 100644
 --- a/node_modules/react-native-calendars/src/calendar/index.js
 +++ b/node_modules/react-native-calendars/src/calendar/index.js
+@@ -20,7 +20,7 @@ import BasicDay from './day/basic';
+  * @gif: https://github.com/wix/react-native-calendars/blob/master/demo/assets/calendar.gif
+  */
+ const Calendar = (props) => {
+-    const { initialDate, current, theme, markedDates, minDate, maxDate, allowSelectionOutOfRange, onDayPress, onDayLongPress, onMonthChange, onVisibleMonthsChange, disableMonthChange, enableSwipeMonths, hideExtraDays, firstDay, showSixWeeks, displayLoadingIndicator, customHeader, headerStyle, accessibilityElementsHidden, importantForAccessibility, testID, style: propsStyle } = props;
++    const { initialDate, current, theme, markedDates, minDate, maxDate, allowSelectionOutOfRange, onDayPress, onDayLongPress, onMonthChange, onVisibleMonthsChange, disableMonthChange, enableSwipeMonths, hideExtraDays, firstDay, showSixWeeks, displayLoadingIndicator, customHeader, headerStyle, accessibilityElementsHidden, importantForAccessibility, testID, style: propsStyle, disableCalendar } = props;
+     const [currentMonth, setCurrentMonth] = useState(current || initialDate ? parseDate(current || initialDate) : new XDate());
+     const style = useRef(styleConstructor(theme));
+     const header = useRef();
 @@ -140,7 +140,9 @@ const Calendar = (props) => {
          const ref = customHeader ? undefined : header;
          const CustomHeader = customHeader;
          const HeaderComponent = customHeader ? CustomHeader : CalendarHeader;
 -        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}/>);
-+        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}>
-+            {!!props.children && props.children}
++        return (<HeaderComponent {...headerProps} testID={`${testID}.header`} disableWeek={disableCalendar} style={headerStyle} ref={ref} month={currentMonth} addMonth={addMonth} displayLoadingIndicator={shouldDisplayIndicator}>
++            {!!props.headerChildren && props.headerChildren}
 +        </HeaderComponent>);
      };
      const GestureComponent = enableSwipeMonths ? GestureRecognizer : View;
      const swipeProps = {
+@@ -152,7 +154,8 @@ const Calendar = (props) => {
+      importantForAccessibility={importantForAccessibility} // Android
+     >
+         {renderHeader()}
+-        {renderMonth()}
++        {!disableCalendar && renderMonth()}
++        {!!props.children && disableCalendar && props.children}
+       </View>
+     </GestureComponent>);
+ };
+@@ -182,5 +185,6 @@ Calendar.propTypes = {
+     disabledByDefault: PropTypes.bool,
+     headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+     customHeader: PropTypes.any,
+-    allowSelectionOutOfRange: PropTypes.bool
++    allowSelectionOutOfRange: PropTypes.bool,
++    disableCalendar: PropTypes.bool
+ };
 diff --git a/node_modules/react-native-calendars/src/dateutils.d.ts b/node_modules/react-native-calendars/src/dateutils.d.ts
 index 4b80156..3d6cfbe 100644
 --- a/node_modules/react-native-calendars/src/dateutils.d.ts
