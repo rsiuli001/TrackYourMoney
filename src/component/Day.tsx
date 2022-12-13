@@ -1,32 +1,60 @@
 import COLOR from '@assets/color';
+import moment, { Moment } from 'moment';
 import React, { FC, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text } from 'react-native';
+import { DateData } from 'react-native-calendars';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
 
-const Day: FC<DayProps> = ({ date, state, ...props }) => {
-  //   console.log('debug: day: ', props);
-  //   console.log('debug: date: ', date);
-  //   console.log('debug: state: ', state);
+const width: number = Dimensions.get('screen').width / 7;
 
-  const color = useMemo(() => (state && state === 'disabled' ? COLOR.grey : COLOR.white), [state]);
+const Day: FC<
+  DayProps & {
+    date?: DateData | undefined;
+  }
+> = ({ date, state, ...props }) => {
+  const momentRef: Moment = moment(date?.dateString, 'YYYY-MM-DD');
+  const onPress = () => {
+    props.onPress && props.onPress(date);
+  };
+
+  const isToday: boolean = useMemo(() => momentRef.isSame(moment(), 'day'), [date?.dateString]);
+  const color = useMemo(
+    () =>
+      state && state === 'disabled'
+        ? COLOR.grey
+        : momentRef.day() === 0
+        ? COLOR.red
+        : momentRef.day() === 6
+        ? COLOR.blue
+        : isToday
+        ? COLOR.black
+        : COLOR.white,
+    [state, isToday, momentRef]
+  );
+
+  const backgroundColor = useMemo(
+    () => (momentRef.isSame(moment(), 'day') ? COLOR.white : COLOR.black),
+    [isToday]
+  );
+
   return (
-    <View style={styles.container}>
-      <Text style={[styles.day, { color }]}>{props.children}</Text>
-    </View>
+    <Pressable style={styles.container} onPress={onPress}>
+      <Text style={[styles.day, { color, backgroundColor }]}>{date?.day}</Text>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // borderColor: COLOR.white,
-    // borderWidth: 0.5,
-    // width: '100%',
-    // height: 30,
-    // marginBottom: -10
+    width,
+    height: width + 15,
+    borderWidth: 0.5,
+    borderColor: COLOR.underLineGrey,
+    paddingBottom: 0,
+    marginBottom: 0
   },
   day: {
-    // flex: 1
+    fontSize: 10
   }
 });
 

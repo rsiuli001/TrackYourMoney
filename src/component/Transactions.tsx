@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
 import { TransactionViewType } from '../utils/calendar';
@@ -8,6 +8,7 @@ import { TransactionStackParams } from '../navigation/transactionStack';
 import {
   CalendarViewType,
   Daily,
+  Day,
   FloatingButton,
   Monthly,
   Summary,
@@ -75,6 +76,7 @@ const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): 
         }}
         disableCalendar={selectedViewType !== TransactionViewType.Calendar}
         headerChildren={renderHeader()}
+        dayComponent={props => <Day {...props} />}
       />
       {selectedViewType !== TransactionViewType.Calendar && renderTransactionView()}
       <FloatingButton onPress={onPress} />

@@ -149,7 +149,7 @@ index a6ff4f9..f678fca 100644
  /**
   * @description: Calendar component
 diff --git a/node_modules/react-native-calendars/src/calendar/index.js b/node_modules/react-native-calendars/src/calendar/index.js
-index 0421c0d..ecb0491 100644
+index 0421c0d..eb98735 100644
 --- a/node_modules/react-native-calendars/src/calendar/index.js
 +++ b/node_modules/react-native-calendars/src/calendar/index.js
 @@ -20,7 +20,7 @@ import BasicDay from './day/basic';
@@ -161,6 +161,15 @@ index 0421c0d..ecb0491 100644
      const [currentMonth, setCurrentMonth] = useState(current || initialDate ? parseDate(current || initialDate) : new XDate());
      const style = useRef(styleConstructor(theme));
      const header = useRef();
+@@ -113,7 +113,7 @@ const Calendar = (props) => {
+         if (props.showWeekNumbers) {
+             week.unshift(renderWeekNumber(days[days.length - 1].getWeek()));
+         }
+-        return (<View style={style.current.week} key={id}>
++        return (<View style={[style.current.week, {marginVertical: 0}]} key={id}>
+         {week}
+       </View>);
+     };
 @@ -140,7 +140,9 @@ const Calendar = (props) => {
          const ref = customHeader ? undefined : header;
          const CustomHeader = customHeader;
@@ -190,6 +199,19 @@ index 0421c0d..ecb0491 100644
 +    allowSelectionOutOfRange: PropTypes.bool,
 +    disableCalendar: PropTypes.bool
  };
+diff --git a/node_modules/react-native-calendars/src/calendar/style.js b/node_modules/react-native-calendars/src/calendar/style.js
+index c9af755..73e4a28 100644
+--- a/node_modules/react-native-calendars/src/calendar/style.js
++++ b/node_modules/react-native-calendars/src/calendar/style.js
+@@ -4,8 +4,6 @@ export default function getStyle(theme = {}) {
+     const appStyle = { ...defaultStyle, ...theme };
+     return StyleSheet.create({
+         container: {
+-            paddingLeft: 5,
+-            paddingRight: 5,
+             backgroundColor: appStyle.calendarBackground
+         },
+         dayContainer: {
 diff --git a/node_modules/react-native-calendars/src/dateutils.d.ts b/node_modules/react-native-calendars/src/dateutils.d.ts
 index 4b80156..3d6cfbe 100644
 --- a/node_modules/react-native-calendars/src/dateutils.d.ts
