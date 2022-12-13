@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TransactionStackParams } from '../navigation/transactionStack';
 import {
   CalendarViewType,
+  CalendarHeaderArrows,
   Daily,
   Day,
   FloatingButton,
@@ -77,6 +78,7 @@ const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): 
         disableCalendar={selectedViewType !== TransactionViewType.Calendar}
         headerChildren={renderHeader()}
         dayComponent={props => <Day {...props} />}
+        renderArrow={props => <CalendarHeaderArrows direction={props} />}
       />
       {selectedViewType !== TransactionViewType.Calendar && renderTransactionView()}
       <FloatingButton onPress={onPress} />

@@ -4,7 +4,7 @@ import AddTransfer from './AddTransfer';
 import BottomSheet from './BottomSheet';
 import Button from './Button';
 import ButtonWrapper from './ButtonWrapper';
-import CalendarHeader from './CalendarHeader';
+import CalendarHeaderArrows from './CalendarHeaderArrows';
 import CalendarViewType from './CalendarViewType';
 import Daily from './Daily';
 import DatePickerModal from './DatePickerModal';
@@ -25,7 +25,7 @@ export {
   BottomSheet,
   Button,
   ButtonWrapper,
-  CalendarHeader,
+  CalendarHeaderArrows,
   CalendarViewType,
   Daily,
   DatePickerModal,
