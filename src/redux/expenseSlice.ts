@@ -3,6 +3,7 @@ import { TransactionType } from '@/utils/transaction';
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { TransactionState } from '../types/transaction';
+import { RootState } from './store';
 import {
   addMonthTransactionData,
   fetchLocalData,

@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   value: {
     marginTop: 5,
     fontSize: 13,
-    textAlign: 'center'
+    textAlign: 'center',
+    letterSpacing: 0.8
   }
 });
 

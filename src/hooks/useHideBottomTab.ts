@@ -5,12 +5,8 @@ import { useLayoutEffect } from 'react';
 function useHideBottomTab() {
   const navigation = useNavigation();
   const route = useRoute();
-  console.log('debug: routeName: ', route);
 
   useLayoutEffect(() => {
-    // const routeName = getFocusedRouteNameFromRoute(route);
-    // console.log('debug: route name: ', routeName);
-
     if (route.name === 'AddTransaction') {
       navigation.getParent()?.setOptions({
         tabBarStyle: {

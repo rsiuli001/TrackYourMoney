@@ -86,8 +86,9 @@ const storeTransactionData = (key: string, state: YearData) => {
     removeMMKVData(key).then(() => {
       storeMMKVData(key, state);
     });
+  } else {
+    storeMMKVData(key, state);
   }
-  storeMMKVData(key, state);
 };
 
 export {

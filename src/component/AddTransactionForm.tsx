@@ -136,9 +136,6 @@ const AddTransactionForm: FC<AddTransactionFormProps> = ({ transactionType }): J
             value={values.amount.toString()}
             underLineColorFocus={COLOR.blue}
             keyboardType={'numeric'}
-            // onFocus={() => {
-            //   console.log('debug: field 4 on focus');
-            // }}
           />
 
           <Input

@@ -1,7 +1,7 @@
-import React, { FC, ReactNode, useCallback } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { FC, ReactNode, useCallback, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { RootState } from '../redux/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TransactionViewType } from '../utils/calendar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TransactionStackParams } from '../navigation/transactionStack';
@@ -15,15 +15,24 @@ import {
   Summary,
   TransactionSummary
 } from '@/component';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, DateData } from 'react-native-calendars';
 import COLOR from '@assets/color';
+import { monthChange } from '@/redux/calendarSlice';
+import { selectIncomeExpenseData } from '@/redux/selectors';
+import { MonthData } from '@/types/transaction';
+import { combineIncomeExpenseData } from '@/utils/transaction';
 
 export interface TransactionsContainerProps
   extends NativeStackScreenProps<TransactionStackParams, 'TransactionScreen'> {}
 
 const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): JSX.Element => {
   const { selectedViewType } = useSelector((state: RootState) => state.calendar);
-
+  const { income, expense, dateObj } = useSelector(selectIncomeExpenseData);
+  const data: MonthData = useMemo(
+    () => combineIncomeExpenseData(income ?? {}, expense ?? {}, dateObj),
+    [income, expense, dateObj]
+  );
+  const dispatch = useDispatch();
   const renderTransactionView = (): ReactNode => {
     switch (selectedViewType) {
       case TransactionViewType.Daily:
@@ -47,6 +56,10 @@ const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): 
       <TransactionSummary />
     </View>
   );
+
+  const onMonthChange = (date: DateData): void => {
+    dispatch(monthChange(date));
+  };
 
   return (
     <View style={styles.container}>
@@ -77,8 +90,12 @@ const TransactionsContainer: FC<TransactionsContainerProps> = ({ navigation }): 
         }}
         disableCalendar={selectedViewType !== TransactionViewType.Calendar}
         headerChildren={renderHeader()}
-        dayComponent={props => <Day {...props} />}
+        dayComponent={props => {
+          const key = `${props.date?.day}-${props.date?.month}-${props.date?.year}`
+          return <Day {...props} data={data[key]} />;
+        }}
         renderArrow={props => <CalendarHeaderArrows direction={props} />}
+        onMonthChange={onMonthChange}
       />
       {selectedViewType !== TransactionViewType.Calendar && renderTransactionView()}
       <FloatingButton onPress={onPress} />

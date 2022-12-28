@@ -1,4 +1,4 @@
-import { RootState } from '@/redux/store';
+import { selectIncomeExpenseData } from '@/redux/selectors';
 import { MonthData, Transaction } from '@/types/transaction';
 import {
   combineIncomeExpenseData,
@@ -18,21 +18,12 @@ import DayTag from './DayTag';
 export interface DailyProps {}
 
 const Daily: FC<DailyProps> = (): JSX.Element => {
-  const { income, expense, dateObj } = useSelector((state: RootState) => {
-    const { selectedMonth, selectedYear } = state.calendar;
-    const { income, expenses } = state;
-    return {
-      income: income[selectedYear]?.[selectedMonth] ?? {},
-      expense: expenses[selectedYear]?.[selectedMonth] ?? {},
-      dateObj: moment(`${selectedMonth + 1}-${selectedYear}`, 'MM-YYYY')
-    };
-  });
-
+  const { income, expense, dateObj } = useSelector(selectIncomeExpenseData);
   const data: MonthData = useMemo(
     () => combineIncomeExpenseData(income ?? {}, expense ?? {}, dateObj),
     [income, expense, dateObj]
   );
-
+  
   const renderTransaction = (t: Transaction, i: number): ReactNode => {
     return (
       <TouchableOpacity key={`DAILY_TRANSACTION_${i}`} style={styles.rowContainer}>

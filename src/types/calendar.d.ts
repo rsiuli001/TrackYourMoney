@@ -11,9 +11,8 @@ export interface CalendarState {
   selectedDay: number;
   selectedYear: number;
   selectedViewType: TransactionViewType;
-  calendar: {
-    [key: string]: (CalendarDays | null)[][];
-  };
+  accounts: string[],
+  category: string[]
 }
 
 export interface CalendarDays {

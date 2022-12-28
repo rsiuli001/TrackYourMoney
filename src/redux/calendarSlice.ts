@@ -1,20 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { CalendarState } from '../types/calendar';
-import { calculateDays, TransactionViewType } from '../utils/calendar';
-import { onDaySelect, onNextMonth, onPrevMonth, onUpdateViewType } from './calendarActions';
+import { TransactionViewType } from '../utils/calendar';
+import {
+  onDaySelect,
+  onMonthChange,
+  onNextMonth,
+  onPrevMonth,
+  onUpdateViewType,
+  onAddAccount,
+  onAddCategory
+} from './calendarActions';
 
 const today = moment();
 
 const initialState: CalendarState = {
   today,
   selectedDay: today.day(),
-  selectedMonth: today.month(),
+  selectedMonth: today.month(), // month index
   selectedYear: today.year(),
   selectedViewType: TransactionViewType.Daily,
-  calendar: {
-    [`${today.month()}-${today.year()}`]: calculateDays(today.month(), today.year())
-  }
+  accounts: [],
+  category: []
 };
 
 export const calendarSlice = createSlice({
@@ -24,10 +31,21 @@ export const calendarSlice = createSlice({
     nextMonth: onNextMonth,
     prevMonth: onPrevMonth,
     selectDay: onDaySelect,
-    updateViewType: onUpdateViewType
+    updateViewType: onUpdateViewType,
+    monthChange: onMonthChange,
+    addAccount: onAddAccount,
+    addCategory: onAddCategory
   }
 });
 
-export const { nextMonth, prevMonth, selectDay, updateViewType } = calendarSlice.actions;
+export const {
+  addAccount,
+  addCategory,
+  nextMonth,
+  prevMonth,
+  selectDay,
+  updateViewType,
+  monthChange
+} = calendarSlice.actions;
 
 export default calendarSlice.reducer;
